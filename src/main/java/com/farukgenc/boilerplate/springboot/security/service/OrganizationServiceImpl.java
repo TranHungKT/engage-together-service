@@ -1,7 +1,9 @@
 package com.farukgenc.boilerplate.springboot.security.service;
 
 import com.farukgenc.boilerplate.springboot.model.Organization;
+import com.farukgenc.boilerplate.springboot.repository.OpportunityRepository;
 import com.farukgenc.boilerplate.springboot.repository.OrganizationRepository;
+import com.farukgenc.boilerplate.springboot.security.dto.OpportunitySummaryOfOrganizationResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.RegistrationOrganizationRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.RegistrationResponse;
 import com.farukgenc.boilerplate.springboot.security.mapper.OrganizationMapper;
@@ -11,6 +13,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -23,6 +29,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final OrganizationRepository organizationRepository;
+    private final OpportunityRepository opportunityRepository;
 
     private final GeneralMessageAccessor generalMessageAccessor;
 
@@ -41,4 +48,22 @@ public class OrganizationServiceImpl implements OrganizationService {
         return new RegistrationResponse(registrationSuccessMessage);
     }
 
+    @Override
+    public OpportunitySummaryOfOrganizationResponse getOpportunitySummaryOfOrganization(UUID id) {
+        organizationValidationService.validateOrganizationId(id);
+
+        var allOpportunitiesOfOrganization = opportunityRepository.findByOrganizationId(id);
+        return OpportunitySummaryOfOrganizationResponse.builder()
+                .totalOpportunities(allOpportunitiesOfOrganization.size())
+                .numberOfUpcomingOpportunity(
+                        allOpportunitiesOfOrganization.stream()
+                                .filter(opportunity -> opportunity.getStartDateTime().isAfter(LocalDateTime.now()))
+                                .toList().size())
+                .numberOfActiveOpportunity(
+                        allOpportunitiesOfOrganization.stream()
+                                .filter(opportunity -> opportunity.getStartDateTime().toLocalDate().isEqual(LocalDateTime.now().toLocalDate()))
+                                .toList().size())
+                .totalVolunteers(0)
+                .build();
+    }
 }
