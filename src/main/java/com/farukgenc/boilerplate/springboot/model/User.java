@@ -1,8 +1,8 @@
 package com.farukgenc.boilerplate.springboot.model;
 
+import com.farukgenc.boilerplate.springboot.model.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
-
 
 /**
  * Created on Ağustos, 2020

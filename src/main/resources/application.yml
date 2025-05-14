@@ -4,7 +4,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://${POSTGRES_DB_SERVER_ADDRESS:localhost}:${POSTGRES_DB_SERVER_PORT:5431}/engage-together
+    url: jdbc:postgresql://${POSTGRES_SERVER_HOST:localhost}:${POSTGRES_DB_SERVER_PORT:5431}/${POSTGRES_DB_SERVER_ADDRESS:engage-together}
     username: ${POSTGRES_USER:postgres}
     password: ${POSTGRES_PASSWORD:example}
     hikari:

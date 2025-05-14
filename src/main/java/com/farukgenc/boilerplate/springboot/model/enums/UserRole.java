@@ -1,4 +1,4 @@
-package com.farukgenc.boilerplate.springboot.model;
+package com.farukgenc.boilerplate.springboot.model.enums;
 
 /**
  * Created on Ağustos, 2020

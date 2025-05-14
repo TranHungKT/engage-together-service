@@ -1,6 +1,6 @@
 package com.farukgenc.boilerplate.springboot.security.dto;
 
-import com.farukgenc.boilerplate.springboot.model.UserRole;
+import com.farukgenc.boilerplate.springboot.model.enums.UserRole;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
