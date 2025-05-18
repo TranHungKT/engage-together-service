@@ -60,19 +60,15 @@ public class SecurityConfiguration {
                 .csrf(CsrfConfigurer::disable)
                 .cors(cors -> corsConfigurationSource())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-//				.authorizeHttpRequests(request -> request.requestMatchers("/register/**",
-//																		  "/register/organization",
-//																			"/register/organization/{id}",
-//																			"/register/opportunity",
-//																	      "/login",
-//																	      "/v3/api-docs/**",
-//																          "/swagger-ui/**",
-//																	      "/swagger-ui.html",
-//																	      "/actuator/**")
-//													   .permitAll()
-//													   .anyRequest()
-//													   .authenticated())
-                .authorizeHttpRequests(request -> request.anyRequest().permitAll())
+				.authorizeHttpRequests(request -> request.requestMatchers(
+																	      "/login",
+																	      "/v3/api-docs/**",
+																          "/swagger-ui/**",
+																	      "/swagger-ui.html",
+																	      "/actuator/**")
+													   .permitAll()
+													   .anyRequest()
+													   .authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(handler -> handler.authenticationEntryPoint(unauthorizedHandler))
                 .build();

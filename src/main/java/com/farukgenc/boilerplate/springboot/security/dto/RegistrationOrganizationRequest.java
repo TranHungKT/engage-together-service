@@ -1,6 +1,7 @@
 package com.farukgenc.boilerplate.springboot.security.dto;
 
 import com.farukgenc.boilerplate.springboot.model.enums.OrganizationType;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -17,6 +18,7 @@ public class RegistrationOrganizationRequest {
     private String name;
 
     @NotEmpty(message = "email not empty")
+    @Email
     private String email;
 
     @NotEmpty(message = "password not empty")

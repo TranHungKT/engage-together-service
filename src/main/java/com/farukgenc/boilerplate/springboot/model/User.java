@@ -4,6 +4,8 @@ import com.farukgenc.boilerplate.springboot.model.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 /**
  * Created on Ağustos, 2020
  *
@@ -19,8 +21,8 @@ import lombok.*;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.UUID)
+	private UUID id;
 
 	private String name;
 

@@ -1,5 +1,7 @@
 package com.farukgenc.boilerplate.springboot.model.ids;
 
+import com.farukgenc.boilerplate.springboot.model.Organization;
+import com.farukgenc.boilerplate.springboot.model.User;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +13,7 @@ import lombok.ToString;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -20,9 +23,10 @@ import java.io.Serializable;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrganizationId implements Serializable {
+public class OrganizationMembersId implements Serializable {
     @Serial
-    private static final long serialVersionUID = -4209093678470383087L;
+    private static final long serialVersionUID = 761503947455170507L;
 
-    private String id;
+    private User user;
+    private Organization organization;
 }

@@ -20,10 +20,9 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/register")
 public class RegistrationController {
-
     private final UserService userService;
 
-    @PostMapping
+    @PostMapping("/user")
     @Operation(tags = "Register Service", description = "You can register to the system by sending information in the appropriate format.")
     public ResponseEntity<RegistrationResponse> registrationRequest(@Valid @RequestBody RegistrationRequest registrationRequest) {
 

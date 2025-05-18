@@ -24,14 +24,10 @@ import java.util.UUID;
 @Table(name = "Organization")
 @Entity
 @NoArgsConstructor
-// @IdClass(OrganizationId.class)
 public class Organization extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
-//    @Id
-//  private String contactPersonId;
 
     @Column(length = 255)
     private String name;

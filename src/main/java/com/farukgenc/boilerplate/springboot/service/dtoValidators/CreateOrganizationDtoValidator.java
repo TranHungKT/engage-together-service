@@ -21,5 +21,9 @@ public class CreateOrganizationDtoValidator implements Validator {
         if (request.getType() == OrganizationType.OTHER && Objects.isNull(request.getOtherType())) {
             throw new BadRequestException("Other type must not be null when organization type is OTHER");
         }
+
+        if(!Objects.equals(request.getPassword(), request.getConfirmPassword())){
+            throw new BadRequestException("Password miss match");
+        }
     }
 }

@@ -50,16 +50,4 @@ public class SecurityConstants {
 
 		throw new UnsupportedOperationException();
 	}
-
-	/**
-	 * @return authenticated username from Security Context
-	 */
-	public static String getAuthenticatedUsername() {
-
-		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
-		return userDetails.getUsername();
-	}
-
 }

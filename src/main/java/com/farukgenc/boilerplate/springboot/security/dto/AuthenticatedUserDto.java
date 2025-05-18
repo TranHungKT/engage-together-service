@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 /**
  * Created on Ağustos, 2020
  *
@@ -14,6 +16,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class AuthenticatedUserDto {
+	private UUID id;
 
 	private String name;
 
