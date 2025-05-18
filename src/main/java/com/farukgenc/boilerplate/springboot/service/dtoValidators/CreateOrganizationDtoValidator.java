@@ -22,7 +22,7 @@ public class CreateOrganizationDtoValidator implements Validator {
             throw new BadRequestException("Other type must not be null when organization type is OTHER");
         }
 
-        if(!Objects.equals(request.getPassword(), request.getConfirmPassword())){
+        if (!Objects.equals(request.getPassword(), request.getConfirmPassword())) {
             throw new BadRequestException("Password miss match");
         }
     }

@@ -12,6 +12,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DataException extends RuntimeException {
 
-	private final String errorMessage;
+    private final String errorMessage;
 
 }

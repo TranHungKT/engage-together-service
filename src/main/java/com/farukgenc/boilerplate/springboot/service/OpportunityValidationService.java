@@ -18,10 +18,10 @@ public class OpportunityValidationService {
     private final OrganizationRepository organizationRepository;
     private final ExceptionMessageAccessor exceptionMessageAccessor;
 
-    public void validateOrganization(UUID organizationId){
+    public void validateOrganization(UUID organizationId) {
         final boolean existById = organizationRepository.existsById(organizationId);
 
-        if(!existById){
+        if (!existById) {
             log.warn("Organization is not exist");
 
             final String notExistOrganization = exceptionMessageAccessor.getMessage(null, ORGANIZATION_NOT_EXIST);

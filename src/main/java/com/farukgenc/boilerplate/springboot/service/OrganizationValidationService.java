@@ -23,7 +23,7 @@ public class OrganizationValidationService {
 
     private final ExceptionMessageAccessor exceptionMessageAccessor;
 
-    public void validateOrganization(RegistrationOrganizationRequest request){
+    public void validateOrganization(RegistrationOrganizationRequest request) {
         final String email = request.getEmail();
         final String name = request.getName();
 
@@ -42,7 +42,7 @@ public class OrganizationValidationService {
         }
     }
 
-    private void checkEmail(String email){
+    private void checkEmail(String email) {
         final boolean existsByEmail = organizationRepository.existsByEmail(email);
 
         if (existsByEmail) {

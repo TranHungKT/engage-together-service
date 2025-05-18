@@ -16,20 +16,20 @@ import java.time.LocalDateTime;
 @RestControllerAdvice(basePackageClasses = RegistrationController.class)
 public class RegistrationControllerAdvice {
 
-	@ExceptionHandler(RegistrationException.class)
-	ResponseEntity<ApiExceptionResponse> handleRegistrationException(RegistrationException exception) {
+    @ExceptionHandler(RegistrationException.class)
+    ResponseEntity<ApiExceptionResponse> handleRegistrationException(RegistrationException exception) {
 
-		final ApiExceptionResponse response = new ApiExceptionResponse(exception.getErrorMessage(), HttpStatus.BAD_REQUEST, LocalDateTime.now());
+        final ApiExceptionResponse response = new ApiExceptionResponse(exception.getErrorMessage(), HttpStatus.BAD_REQUEST, LocalDateTime.now());
 
-		return ResponseEntity.status(response.getStatus()).body(response);
-	}
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
 
-	@ExceptionHandler(BadRequestException.class)
-	ResponseEntity<ApiExceptionResponse> handleBadRequestException(BadRequestException exception) {
+    @ExceptionHandler(BadRequestException.class)
+    ResponseEntity<ApiExceptionResponse> handleBadRequestException(BadRequestException exception) {
 
-		final ApiExceptionResponse response = new ApiExceptionResponse(exception.getErrorMessage(), HttpStatus.BAD_REQUEST, LocalDateTime.now());
+        final ApiExceptionResponse response = new ApiExceptionResponse(exception.getErrorMessage(), HttpStatus.BAD_REQUEST, LocalDateTime.now());
 
-		return ResponseEntity.status(response.getStatus()).body(response);
-	}
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
 
 }

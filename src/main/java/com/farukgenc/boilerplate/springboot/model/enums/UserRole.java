@@ -7,6 +7,6 @@ package com.farukgenc.boilerplate.springboot.model.enums;
  */
 public enum UserRole {
 
-	USER, ADMIN
+    USER, ADMIN
 
 }

@@ -16,14 +16,14 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 public class AuthenticatedUserDto {
-	private UUID id;
+    private UUID id;
 
-	private String name;
+    private String name;
 
-	private String username;
+    private String username;
 
-	private String password;
+    private String password;
 
-	private UserRole userRole;
+    private UserRole userRole;
 
 }

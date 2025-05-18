@@ -16,6 +16,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RegistrationResponse {
 
-	private String message;
+    private String message;
 
 }

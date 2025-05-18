@@ -1,6 +1,5 @@
 package com.farukgenc.boilerplate.springboot.security.service;
 
-import com.farukgenc.boilerplate.springboot.exceptions.ApiExceptionResponse;
 import com.farukgenc.boilerplate.springboot.exceptions.RegistrationException;
 import com.farukgenc.boilerplate.springboot.model.Organization;
 import com.farukgenc.boilerplate.springboot.model.OrganizationMembers;
@@ -20,11 +19,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.UUID;
 
 @Slf4j

@@ -6,6 +6,7 @@ import java.util.UUID;
 
 public interface CustomUserDetails extends
         UserDetails {
-    public UUID getUserId();
-    public void setUserId(UUID userId);
+    UUID getUserId();
+
+    void setUserId(UUID userId);
 }
