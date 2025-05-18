@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ApiExceptionResponse {
-
 	private String message;
 
 	private HttpStatus status;
