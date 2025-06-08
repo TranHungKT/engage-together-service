@@ -1,8 +1,12 @@
 package com.farukgenc.boilerplate.springboot.controller;
 
 
+import com.farukgenc.boilerplate.springboot.common.model.dto.CustomPage;
+import com.farukgenc.boilerplate.springboot.common.model.dto.response.CustomPagingResponse;
+import com.farukgenc.boilerplate.springboot.model.Opportunity;
 import com.farukgenc.boilerplate.springboot.security.dto.CreateOpportunityRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.RegistrationResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.SearchOpportunityRequest;
 import com.farukgenc.boilerplate.springboot.security.service.OpportunityService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,5 +28,11 @@ public class OpportunityController {
 
         final RegistrationResponse createOpportunityResponse = opportunityService.createNewOpportunity(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(createOpportunityResponse);
+    }
+
+    @PostMapping("/search")
+    public ResponseEntity<CustomPage<Opportunity>> searchOpportunity(@Valid @RequestBody SearchOpportunityRequest request) {
+        CustomPage<Opportunity> opportunityCustomPage = opportunityService.searchOpportunity(request);
+        return ResponseEntity.status(HttpStatus.OK).body(opportunityCustomPage);
     }
 }
