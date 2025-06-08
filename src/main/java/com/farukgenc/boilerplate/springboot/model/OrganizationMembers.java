@@ -1,8 +1,12 @@
 package com.farukgenc.boilerplate.springboot.model;
 
+import com.farukgenc.boilerplate.springboot.model.User_;
+import com.farukgenc.boilerplate.springboot.model.enums.UserRoleInOrganization;
 import com.farukgenc.boilerplate.springboot.model.ids.OrganizationId_;
 import com.farukgenc.boilerplate.springboot.model.ids.OrganizationMembersId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
@@ -30,7 +34,7 @@ public class OrganizationMembers extends BaseEntity {
     @ToString.Exclude
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", insertable = false, nullable = false, updatable = false)
+    @JoinColumn(name = "user_id", insertable = false, nullable = false, updatable = false, referencedColumnName = User_.ID)
     private User user;
 
     @EqualsAndHashCode.Exclude
@@ -40,5 +44,6 @@ public class OrganizationMembers extends BaseEntity {
     @JoinColumn(name = "organization_id", insertable = false, nullable = false, updatable = false, referencedColumnName = OrganizationId_.ID)
     private Organization organization;
 
-    private String userRole;
+    @Enumerated(EnumType.STRING)
+    private UserRoleInOrganization userRole;
 }

@@ -3,11 +3,13 @@ package com.farukgenc.boilerplate.springboot.security.service;
 import com.farukgenc.boilerplate.springboot.exceptions.RegistrationException;
 import com.farukgenc.boilerplate.springboot.model.Organization;
 import com.farukgenc.boilerplate.springboot.model.OrganizationMembers;
+import com.farukgenc.boilerplate.springboot.model.enums.UserRoleInOrganization;
 import com.farukgenc.boilerplate.springboot.repository.OpportunityRepository;
 import com.farukgenc.boilerplate.springboot.repository.OrganizationMembersRepository;
 import com.farukgenc.boilerplate.springboot.repository.OrganizationRepository;
 import com.farukgenc.boilerplate.springboot.repository.UserRepository;
 import com.farukgenc.boilerplate.springboot.security.dto.OpportunitySummaryOfOrganizationResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.OrganizationDetailsResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.RegistrationOrganizationRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.RegistrationResponse;
 import com.farukgenc.boilerplate.springboot.security.mapper.OrganizationMapper;
@@ -21,7 +23,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -53,7 +57,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         if (user.isEmpty()) {
             throw new RegistrationException("User not exist");
         }
-        var member = OrganizationMembers.builder().user(user.get()).organization(savedOrganization).createdBy(user.get().getUsername()).userRole("MASTER").build();
+        var member = OrganizationMembers.builder().user(user.get()).organization(savedOrganization).createdBy(user.get().getUsername()).userRole(UserRoleInOrganization.ADMIN).build();
         organizationMembersRepository.save(member);
         final String registrationSuccessMessage = generalMessageAccessor.getMessage(null, REGISTRATION_SUCCESSFUL, registrationOrganizationRequest.getName());
 
@@ -78,6 +82,39 @@ public class OrganizationServiceImpl implements OrganizationService {
                                 .filter(opportunity -> opportunity.getStartDateTime().toLocalDate().isEqual(LocalDateTime.now().toLocalDate()))
                                 .toList().size())
                 .totalVolunteers(0)
+                .build();
+    }
+
+    @Override
+    public OrganizationDetailsResponse getOrganizationDetails(UUID id) {
+        var organizationOpt = organizationRepository.findById(id);
+
+        if (organizationOpt.isEmpty()) {
+            organizationValidationService.throwOrganizationDoNotExistException(id);
+        }
+
+        var organization = organizationOpt.get();
+
+        var organizationMembers = organizationMembersRepository.findAllByOrganizationId(id).stream()
+                .collect(Collectors.groupingBy(OrganizationMembers::getUserRole));
+        var allOpportunitiesOfOrganization = opportunityRepository.findByOrganizationId(id);
+
+        return OrganizationDetailsResponse.builder()
+                .name(organization.getName())
+                .type(organization.getType().name())
+                .otherType(
+                        organization.getOtherType()
+                )
+                .admins(
+                        organizationMembers.get(UserRoleInOrganization.ADMIN).stream()
+                                .map(member -> member.getUser().getId())
+                                .map(userId -> OrganizationDetailsResponse.OrganizationAdmin.builder().adminId(userId).build())
+                                .toList()
+                )
+                .numberOfFollowers(organizationMembers.getOrDefault(UserRoleInOrganization.FOLLOWER, List.of()).size())
+                .numberOfOpportunity(allOpportunitiesOfOrganization.stream()
+                        .filter(opportunity -> opportunity.getStartDateTime().toLocalDate().isEqual(LocalDateTime.now().toLocalDate()))
+                        .toList().size())
                 .build();
     }
 }

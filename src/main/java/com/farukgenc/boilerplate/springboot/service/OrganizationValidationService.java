@@ -35,11 +35,15 @@ public class OrganizationValidationService {
         final boolean existByOrganizationId = organizationRepository.existsById(id);
 
         if (!existByOrganizationId) {
-            log.warn("Organization id {} is not exist", id);
-
-            final String existId = exceptionMessageAccessor.getMessage(null, ORGANIZATION_ID_NOT_EXISTS);
-            throw new DataException(existId);
+            throwOrganizationDoNotExistException(id);
         }
+    }
+
+    public void throwOrganizationDoNotExistException(UUID id){
+        log.warn("Organization id {} is not exist", id);
+
+        final String existId = exceptionMessageAccessor.getMessage(null, ORGANIZATION_ID_NOT_EXISTS);
+        throw new DataException(existId);
     }
 
     private void checkEmail(String email) {

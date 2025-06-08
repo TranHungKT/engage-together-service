@@ -1,6 +1,7 @@
 package com.farukgenc.boilerplate.springboot.controller;
 
 import com.farukgenc.boilerplate.springboot.security.dto.OpportunitySummaryOfOrganizationResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.OrganizationDetailsResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.RegistrationOrganizationRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.RegistrationResponse;
 import com.farukgenc.boilerplate.springboot.security.service.OrganizationService;
@@ -59,5 +60,12 @@ public class OrganizationController {
             @PathVariable UUID id
     ) {
         return ResponseEntity.status(HttpStatus.OK).body(organizationService.getOpportunitySummaryOfOrganization(id));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<OrganizationDetailsResponse> getOrganizationDetails(
+            @PathVariable UUID id
+    ) {
+        return ResponseEntity.status(HttpStatus.OK).body(organizationService.getOrganizationDetails(id));
     }
 }
