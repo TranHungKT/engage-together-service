@@ -12,6 +12,6 @@ import java.util.UUID;
 public interface OpportunityRepository extends JpaRepository<Opportunity, UUID> {
     List<Opportunity> findByOrganizationId(UUID organizationId);
 
-    @Query("select o from Opportunity o where o.title like %:title%")
+    @Query("select o from Opportunity o where o.title like %:title% or :title is null or :title =''")
     Page<Opportunity> searchOpportunity(String title, Pageable pageable);
 }

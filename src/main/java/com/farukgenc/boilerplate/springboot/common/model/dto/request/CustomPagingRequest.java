@@ -5,8 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
+import java.util.Optional;
 
 /**
  * Abstract class that represents a custom paging request.
@@ -32,6 +36,18 @@ public abstract class CustomPagingRequest {
         return PageRequest.of(
                 Math.toIntExact(pagination.getPageNumber()),
                 Math.toIntExact(pagination.getPageSize())
+        );
+    }
+
+    public Pageable toPageable(String defaultSortField) {
+        Sort sort = Sort.Direction.ASC.name().equalsIgnoreCase(pagination.getSortOrd())
+                ? Sort.by(Optional.ofNullable(pagination.getSortField()).orElse(defaultSortField)).ascending()
+                : Sort.by(Optional.ofNullable(pagination.getSortField()).orElse(defaultSortField)).descending();
+
+        return PageRequest.of(
+                Math.toIntExact(pagination.getPageNumber()),
+                Math.toIntExact(pagination.getPageSize()),
+                sort
         );
     }
 

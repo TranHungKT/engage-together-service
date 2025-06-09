@@ -15,8 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-
-import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -24,7 +22,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class OpportunityServiceImpl implements OpportunityService {
     private static final String REGISTRATION_SUCCESSFUL = "registration_successful";
-
+    private static final String DEFAULT_SORT_FIELD = "title";
 
     private final OpportunityValidationService opportunityValidationService;
     private final OpportunityRepository opportunityRepository;
@@ -45,7 +43,7 @@ public class OpportunityServiceImpl implements OpportunityService {
 
     @Override
     public CustomPage<Opportunity> searchOpportunity(SearchOpportunityRequest request) {
-        Pageable pageable = request.toPageable();
+        Pageable pageable = request.toPageable(DEFAULT_SORT_FIELD);
         Page<Opportunity> opportunities = opportunityRepository.searchOpportunity(request.getTitle(), pageable);
         return CustomPage.of(opportunities.getContent(), opportunities);
     }

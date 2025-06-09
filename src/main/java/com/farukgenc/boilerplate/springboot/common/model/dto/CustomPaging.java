@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.domain.Sort;
 
 /**
  * A class representing the pagination information for a request.
@@ -28,6 +29,11 @@ public class CustomPaging {
 
     @Min(value = 1, message = "Page size must be bigger than 0")
     private Integer pageSize;
+
+    private String sortField;
+
+    private String sortOrd;
+
 
     /**
      * Returns the 0-based page number for internal use in pagination.
