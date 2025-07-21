@@ -7,10 +7,10 @@ import org.springframework.security.core.userdetails.User;
 import java.util.Collection;
 import java.util.UUID;
 
-public class Test extends User implements CustomUserDetails {
+public class SecurityUser extends User implements CustomUserDetails {
     private UUID userId;
 
-    public Test(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    public SecurityUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
     }
 

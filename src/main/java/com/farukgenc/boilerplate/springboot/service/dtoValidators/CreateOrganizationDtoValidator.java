@@ -2,7 +2,7 @@ package com.farukgenc.boilerplate.springboot.service.dtoValidators;
 
 import com.farukgenc.boilerplate.springboot.exceptions.BadRequestException;
 import com.farukgenc.boilerplate.springboot.model.enums.OrganizationType;
-import com.farukgenc.boilerplate.springboot.security.dto.RegistrationOrganizationRequest;
+import com.farukgenc.boilerplate.springboot.security.dto.request.RegistrationOrganizationRequest;
 import lombok.NonNull;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

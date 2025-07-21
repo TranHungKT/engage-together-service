@@ -1,7 +1,7 @@
 package com.farukgenc.boilerplate.springboot.security.mapper;
 
 import com.farukgenc.boilerplate.springboot.model.Opportunity;
-import com.farukgenc.boilerplate.springboot.security.dto.CreateOpportunityRequest;
+import com.farukgenc.boilerplate.springboot.security.dto.request.CreateOpportunityRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

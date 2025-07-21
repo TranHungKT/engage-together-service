@@ -1,4 +1,4 @@
-package com.farukgenc.boilerplate.springboot.security.dto;
+package com.farukgenc.boilerplate.springboot.security.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -24,6 +24,7 @@ public class AuthenticatedUserDto {
 
     private String password;
 
-    private UserRole userRole;
+    private String email;
 
+    private UserRole userRole;
 }
