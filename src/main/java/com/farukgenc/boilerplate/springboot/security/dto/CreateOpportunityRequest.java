@@ -26,9 +26,10 @@ public class CreateOpportunityRequest {
 
     private String zipCode;
 
-    @NotEmpty(message = "not empty")
+//    @NotEmpty(message = "not empty")
     private LocalDateTime startDateTime;
-    @NotEmpty(message = "not empty")
+
+//    @NotEmpty(message = "not empty")
     private LocalDateTime endDateTime;
 
     private String[] requirements;
