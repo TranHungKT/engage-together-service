@@ -1,7 +1,7 @@
 package com.farukgenc.boilerplate.springboot.security.jwt;
 
 import com.farukgenc.boilerplate.springboot.model.CustomUserDetails;
-import com.farukgenc.boilerplate.springboot.security.service.UserDetailsServiceImpl;
+import com.farukgenc.boilerplate.springboot.security.service.impl.UserDetailsServiceImpl;
 import com.farukgenc.boilerplate.springboot.security.utils.SecurityConstants;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

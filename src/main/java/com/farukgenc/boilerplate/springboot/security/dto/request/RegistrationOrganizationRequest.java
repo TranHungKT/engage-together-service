@@ -1,4 +1,4 @@
-package com.farukgenc.boilerplate.springboot.security.dto;
+package com.farukgenc.boilerplate.springboot.security.dto.request;
 
 import com.farukgenc.boilerplate.springboot.model.enums.OrganizationType;
 import jakarta.validation.constraints.Email;

@@ -2,7 +2,7 @@ package com.farukgenc.boilerplate.springboot.security.mapper;
 
 import com.farukgenc.boilerplate.springboot.model.User;
 import com.farukgenc.boilerplate.springboot.security.dto.AuthenticatedUserDto;
-import com.farukgenc.boilerplate.springboot.security.dto.RegistrationRequest;
+import com.farukgenc.boilerplate.springboot.security.dto.request.RegistrationRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;

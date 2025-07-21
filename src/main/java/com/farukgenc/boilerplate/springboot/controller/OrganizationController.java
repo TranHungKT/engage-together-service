@@ -1,9 +1,9 @@
 package com.farukgenc.boilerplate.springboot.controller;
 
-import com.farukgenc.boilerplate.springboot.security.dto.OpportunitySummaryOfOrganizationResponse;
-import com.farukgenc.boilerplate.springboot.security.dto.OrganizationDetailsResponse;
-import com.farukgenc.boilerplate.springboot.security.dto.RegistrationOrganizationRequest;
-import com.farukgenc.boilerplate.springboot.security.dto.RegistrationResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.response.OpportunitySummaryOfOrganizationResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.response.OrganizationDetailsResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.request.RegistrationOrganizationRequest;
+import com.farukgenc.boilerplate.springboot.security.dto.response.RegistrationResponse;
 import com.farukgenc.boilerplate.springboot.security.service.OrganizationService;
 import com.farukgenc.boilerplate.springboot.service.dtoValidators.CreateOrganizationDtoValidator;
 import jakarta.validation.Valid;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
@@ -29,7 +28,6 @@ import java.util.UUID;
 @Validated
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/register/organization")
 public class OrganizationController {
     private final OrganizationService organizationService;
 
@@ -48,21 +46,21 @@ public class OrganizationController {
         );
     }
 
-    @PostMapping
+    @PostMapping("/organization/register")
     public ResponseEntity<RegistrationResponse> registerOrganization(@Valid @RequestBody RegistrationOrganizationRequest request) {
         final RegistrationResponse registrationResponse = organizationService.registration(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(registrationResponse);
     }
 
-    @GetMapping("/summary_opportunity/{id}")
+    @GetMapping("/organization/summary_opportunity/{id}")
     public ResponseEntity<OpportunitySummaryOfOrganizationResponse> getOpportunitySummaryOfOrganization(
             @PathVariable UUID id
     ) {
         return ResponseEntity.status(HttpStatus.OK).body(organizationService.getOpportunitySummaryOfOrganization(id));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/organization/{id}")
     public ResponseEntity<OrganizationDetailsResponse> getOrganizationDetails(
             @PathVariable UUID id
     ) {

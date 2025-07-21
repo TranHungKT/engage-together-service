@@ -1,4 +1,4 @@
-package com.farukgenc.boilerplate.springboot.security.dto;
+package com.farukgenc.boilerplate.springboot.security.dto.request;
 
 import com.farukgenc.boilerplate.springboot.common.model.dto.request.CustomPagingRequest;
 import jakarta.validation.constraints.NotNull;

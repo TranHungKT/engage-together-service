@@ -1,7 +1,7 @@
 package com.farukgenc.boilerplate.springboot.controller;
 
-import com.farukgenc.boilerplate.springboot.security.dto.LoginRequest;
-import com.farukgenc.boilerplate.springboot.security.dto.LoginResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.request.LoginRequest;
+import com.farukgenc.boilerplate.springboot.security.dto.response.LoginResponse;
 import com.farukgenc.boilerplate.springboot.security.jwt.JwtTokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -27,7 +27,6 @@ public class LoginController {
     @PostMapping
     @Operation(tags = "Login Service", description = "You must log in with the correct information to successfully obtain the token information.")
     public ResponseEntity<LoginResponse> loginRequest(@Valid @RequestBody LoginRequest loginRequest) {
-
         final LoginResponse loginResponse = jwtTokenService.getLoginResponse(loginRequest);
 
         return ResponseEntity.ok(loginResponse);

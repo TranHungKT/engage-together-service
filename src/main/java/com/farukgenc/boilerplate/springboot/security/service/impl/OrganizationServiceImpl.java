@@ -1,4 +1,4 @@
-package com.farukgenc.boilerplate.springboot.security.service;
+package com.farukgenc.boilerplate.springboot.security.service.impl;
 
 import com.farukgenc.boilerplate.springboot.exceptions.RegistrationException;
 import com.farukgenc.boilerplate.springboot.model.Organization;
@@ -8,11 +8,12 @@ import com.farukgenc.boilerplate.springboot.repository.OpportunityRepository;
 import com.farukgenc.boilerplate.springboot.repository.OrganizationMembersRepository;
 import com.farukgenc.boilerplate.springboot.repository.OrganizationRepository;
 import com.farukgenc.boilerplate.springboot.repository.UserRepository;
-import com.farukgenc.boilerplate.springboot.security.dto.OpportunitySummaryOfOrganizationResponse;
-import com.farukgenc.boilerplate.springboot.security.dto.OrganizationDetailsResponse;
-import com.farukgenc.boilerplate.springboot.security.dto.RegistrationOrganizationRequest;
-import com.farukgenc.boilerplate.springboot.security.dto.RegistrationResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.response.OpportunitySummaryOfOrganizationResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.response.OrganizationDetailsResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.request.RegistrationOrganizationRequest;
+import com.farukgenc.boilerplate.springboot.security.dto.response.RegistrationResponse;
 import com.farukgenc.boilerplate.springboot.security.mapper.OrganizationMapper;
+import com.farukgenc.boilerplate.springboot.security.service.OrganizationService;
 import com.farukgenc.boilerplate.springboot.security.utils.UserDetailUtils;
 import com.farukgenc.boilerplate.springboot.service.OrganizationValidationService;
 import com.farukgenc.boilerplate.springboot.utils.GeneralMessageAccessor;
@@ -43,7 +44,6 @@ public class OrganizationServiceImpl implements OrganizationService {
     private final GeneralMessageAccessor generalMessageAccessor;
     private final OrganizationMembersRepository organizationMembersRepository;
     private final UserRepository userRepository;
-
 
     @Transactional
     public RegistrationResponse registration(RegistrationOrganizationRequest registrationOrganizationRequest) {

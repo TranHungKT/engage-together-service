@@ -1,9 +1,9 @@
 package com.farukgenc.boilerplate.springboot.security.service;
 
-import com.farukgenc.boilerplate.springboot.security.dto.OpportunitySummaryOfOrganizationResponse;
-import com.farukgenc.boilerplate.springboot.security.dto.OrganizationDetailsResponse;
-import com.farukgenc.boilerplate.springboot.security.dto.RegistrationOrganizationRequest;
-import com.farukgenc.boilerplate.springboot.security.dto.RegistrationResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.response.OpportunitySummaryOfOrganizationResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.response.OrganizationDetailsResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.request.RegistrationOrganizationRequest;
+import com.farukgenc.boilerplate.springboot.security.dto.response.RegistrationResponse;
 
 import java.util.UUID;
 

@@ -1,6 +1,7 @@
-package com.farukgenc.boilerplate.springboot.security.dto;
+package com.farukgenc.boilerplate.springboot.security.dto.response;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,8 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
+@Builder
 public class LoginResponse {
-
     private String token;
-
 }

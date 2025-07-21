@@ -3,7 +3,7 @@ package com.farukgenc.boilerplate.springboot.service;
 import com.farukgenc.boilerplate.springboot.exceptions.DataException;
 import com.farukgenc.boilerplate.springboot.exceptions.RegistrationException;
 import com.farukgenc.boilerplate.springboot.repository.OrganizationRepository;
-import com.farukgenc.boilerplate.springboot.security.dto.RegistrationOrganizationRequest;
+import com.farukgenc.boilerplate.springboot.security.dto.request.RegistrationOrganizationRequest;
 import com.farukgenc.boilerplate.springboot.utils.ExceptionMessageAccessor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

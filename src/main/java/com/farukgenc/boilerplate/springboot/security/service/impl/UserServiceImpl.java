@@ -1,12 +1,17 @@
-package com.farukgenc.boilerplate.springboot.security.service;
+package com.farukgenc.boilerplate.springboot.security.service.impl;
 
+import com.farukgenc.boilerplate.springboot.exceptions.DataException;
+import com.farukgenc.boilerplate.springboot.model.CustomUserDetails;
 import com.farukgenc.boilerplate.springboot.model.User;
 import com.farukgenc.boilerplate.springboot.model.enums.UserRole;
 import com.farukgenc.boilerplate.springboot.repository.UserRepository;
 import com.farukgenc.boilerplate.springboot.security.dto.AuthenticatedUserDto;
-import com.farukgenc.boilerplate.springboot.security.dto.RegistrationRequest;
-import com.farukgenc.boilerplate.springboot.security.dto.RegistrationResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.request.RegistrationRequest;
+import com.farukgenc.boilerplate.springboot.security.dto.response.RegistrationResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.response.UserDetailsResponse;
 import com.farukgenc.boilerplate.springboot.security.mapper.UserMapper;
+import com.farukgenc.boilerplate.springboot.security.service.UserService;
+import com.farukgenc.boilerplate.springboot.security.utils.UserDetailUtils;
 import com.farukgenc.boilerplate.springboot.service.UserValidationService;
 import com.farukgenc.boilerplate.springboot.utils.GeneralMessageAccessor;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +41,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUsername(String username) {
-
         return userRepository.findByUsername(username);
     }
 
@@ -65,5 +69,22 @@ public class UserServiceImpl implements UserService {
         final User user = findByUsername(username);
 
         return UserMapper.INSTANCE.convertToAuthenticatedUserDto(user);
+    }
+
+    @Override
+    public UserDetailsResponse getUserDetails() {
+        var userOptional = userRepository.findById(UserDetailUtils.getUserDetailsByToken().getUserId());
+
+        if(userOptional.isEmpty()){
+            throw new DataException("User not found");
+        }
+
+        var user = userOptional.get();
+
+        return UserDetailsResponse.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .username(user.getUsername())
+                .build();
     }
 }

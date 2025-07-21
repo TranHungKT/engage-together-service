@@ -2,8 +2,9 @@ package com.farukgenc.boilerplate.springboot.security.jwt;
 
 import com.farukgenc.boilerplate.springboot.model.User;
 import com.farukgenc.boilerplate.springboot.security.dto.AuthenticatedUserDto;
-import com.farukgenc.boilerplate.springboot.security.dto.LoginRequest;
-import com.farukgenc.boilerplate.springboot.security.dto.LoginResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.request.LoginRequest;
+import com.farukgenc.boilerplate.springboot.security.dto.response.LoginResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.response.UserDetailsResponse;
 import com.farukgenc.boilerplate.springboot.security.mapper.UserMapper;
 import com.farukgenc.boilerplate.springboot.security.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +45,9 @@ public class JwtTokenService {
 
         log.info("{} has successfully logged in!", user.getUsername());
 
-        return new LoginResponse(token);
+        return LoginResponse.builder()
+                .token(token)
+                .build();
     }
 
 }

@@ -1,9 +1,10 @@
-package com.farukgenc.boilerplate.springboot.security.service;
+package com.farukgenc.boilerplate.springboot.security.service.impl;
 
 import com.farukgenc.boilerplate.springboot.model.CustomUserDetails;
 import com.farukgenc.boilerplate.springboot.model.enums.UserRole;
-import com.farukgenc.boilerplate.springboot.repository.Test;
+import com.farukgenc.boilerplate.springboot.repository.SecurityUser;
 import com.farukgenc.boilerplate.springboot.security.dto.AuthenticatedUserDto;
+import com.farukgenc.boilerplate.springboot.security.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -42,7 +43,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         final UserRole userRole = authenticatedUser.getUserRole();
         final SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(userRole.name());
 
-        CustomUserDetails user = new Test(authenticatedUsername, authenticatedPassword, Collections.singletonList(grantedAuthority));
+        CustomUserDetails user = new SecurityUser(authenticatedUsername, authenticatedPassword, Collections.singletonList(grantedAuthority));
         user.setUserId(authenticatedUser.getId());
         return user;
     }
