@@ -60,8 +60,8 @@ public class SecurityConfiguration {
                 .cors(cors -> corsConfigurationSource())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 				.authorizeHttpRequests(request -> request.requestMatchers(
-                                                                        "register/user",
-																	      "/login",
+                                                                        "user/register",
+																	      "user/login",
 																	      "/v3/api-docs/**",
 																          "/swagger-ui/**",
 																	      "/swagger-ui.html",
