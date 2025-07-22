@@ -6,6 +6,7 @@ import com.farukgenc.boilerplate.springboot.security.dto.request.RegistrationOrg
 import com.farukgenc.boilerplate.springboot.security.dto.response.RegistrationResponse;
 import com.farukgenc.boilerplate.springboot.security.service.OrganizationService;
 import com.farukgenc.boilerplate.springboot.service.dtoValidators.CreateOrganizationDtoValidator;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -47,6 +48,7 @@ public class OrganizationController {
     }
 
     @PostMapping("/organization/register")
+    @Operation(tags = "Organization Service", description = "You can register your organization to the system by sending information in the appropriate format.")
     public ResponseEntity<RegistrationResponse> registerOrganization(@Valid @RequestBody RegistrationOrganizationRequest request) {
         final RegistrationResponse registrationResponse = organizationService.registration(request);
 
@@ -54,6 +56,7 @@ public class OrganizationController {
     }
 
     @GetMapping("/organization/summary_opportunity/{id}")
+    @Operation(tags = "Organization Service", description = "You can get your organization summary.")
     public ResponseEntity<OpportunitySummaryOfOrganizationResponse> getOpportunitySummaryOfOrganization(
             @PathVariable UUID id
     ) {
@@ -61,6 +64,7 @@ public class OrganizationController {
     }
 
     @GetMapping("/organization/{id}")
+    @Operation(tags = "Organization Service", description = "You can get your organization details.")
     public ResponseEntity<OrganizationDetailsResponse> getOrganizationDetails(
             @PathVariable UUID id
     ) {

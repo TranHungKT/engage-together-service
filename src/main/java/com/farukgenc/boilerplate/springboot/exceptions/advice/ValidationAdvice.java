@@ -1,5 +1,6 @@
-package com.farukgenc.boilerplate.springboot.exceptions;
+package com.farukgenc.boilerplate.springboot.exceptions.advice;
 
+import com.farukgenc.boilerplate.springboot.exceptions.ValidationErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
