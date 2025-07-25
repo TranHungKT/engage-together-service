@@ -18,7 +18,7 @@ public class OrganizationDetailsResponse {
     private String name;
     private String type;
     private String otherType;
-    private Integer numberOfOpportunity;
+    private Integer numberOfActivity;
     private Integer numberOfFollowers;
     private List<OrganizationAdmin> admins;
 

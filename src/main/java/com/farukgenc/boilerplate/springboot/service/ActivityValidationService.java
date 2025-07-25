@@ -12,7 +12,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class OpportunityValidationService {
+public class ActivityValidationService {
     private static final String ORGANIZATION_NOT_EXIST = "organization_not_exist";
 
     private final OrganizationRepository organizationRepository;

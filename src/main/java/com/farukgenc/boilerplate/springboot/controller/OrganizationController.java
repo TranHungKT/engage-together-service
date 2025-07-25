@@ -1,6 +1,6 @@
 package com.farukgenc.boilerplate.springboot.controller;
 
-import com.farukgenc.boilerplate.springboot.security.dto.response.OpportunitySummaryOfOrganizationResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.response.ActivitySummaryOfOrganizationResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.response.OrganizationDetailsResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.request.RegistrationOrganizationRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.response.RegistrationResponse;
@@ -55,12 +55,12 @@ public class OrganizationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(registrationResponse);
     }
 
-    @GetMapping("/organization/summary_opportunity/{id}")
+    @GetMapping("/organization/summary_activity/{id}")
     @Operation(tags = "Organization Service", description = "You can get your organization summary.")
-    public ResponseEntity<OpportunitySummaryOfOrganizationResponse> getOpportunitySummaryOfOrganization(
+    public ResponseEntity<ActivitySummaryOfOrganizationResponse> getActivitySummaryOfOrganization(
             @PathVariable UUID id
     ) {
-        return ResponseEntity.status(HttpStatus.OK).body(organizationService.getOpportunitySummaryOfOrganization(id));
+        return ResponseEntity.status(HttpStatus.OK).body(organizationService.getActivitySummaryOfOrganization(id));
     }
 
     @GetMapping("/organization/{id}")

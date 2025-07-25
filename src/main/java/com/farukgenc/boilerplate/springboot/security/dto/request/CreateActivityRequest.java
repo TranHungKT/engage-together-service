@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @NoArgsConstructor
-public class CreateOpportunityRequest {
+public class CreateActivityRequest {
     private String organizationId;
 
     @NotEmpty(message = "not empty")

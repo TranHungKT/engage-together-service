@@ -4,11 +4,11 @@ import com.farukgenc.boilerplate.springboot.exceptions.RegistrationException;
 import com.farukgenc.boilerplate.springboot.model.Organization;
 import com.farukgenc.boilerplate.springboot.model.OrganizationMembers;
 import com.farukgenc.boilerplate.springboot.model.enums.UserRoleInOrganization;
-import com.farukgenc.boilerplate.springboot.repository.OpportunityRepository;
+import com.farukgenc.boilerplate.springboot.repository.ActivityRepository;
 import com.farukgenc.boilerplate.springboot.repository.OrganizationMembersRepository;
 import com.farukgenc.boilerplate.springboot.repository.OrganizationRepository;
 import com.farukgenc.boilerplate.springboot.repository.UserRepository;
-import com.farukgenc.boilerplate.springboot.security.dto.response.OpportunitySummaryOfOrganizationResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.response.ActivitySummaryOfOrganizationResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.response.OrganizationDetailsResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.request.RegistrationOrganizationRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.response.RegistrationResponse;
@@ -39,7 +39,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final OrganizationRepository organizationRepository;
-    private final OpportunityRepository opportunityRepository;
+    private final ActivityRepository activityRepository;
 
     private final GeneralMessageAccessor generalMessageAccessor;
     private final OrganizationMembersRepository organizationMembersRepository;
@@ -67,19 +67,19 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public OpportunitySummaryOfOrganizationResponse getOpportunitySummaryOfOrganization(UUID id) {
+    public ActivitySummaryOfOrganizationResponse getActivitySummaryOfOrganization(UUID id) {
         organizationValidationService.validateOrganizationId(id);
 
-        var allOpportunitiesOfOrganization = opportunityRepository.findByOrganizationId(id);
-        return OpportunitySummaryOfOrganizationResponse.builder()
-                .totalOpportunities(allOpportunitiesOfOrganization.size())
-                .numberOfUpcomingOpportunity(
-                        allOpportunitiesOfOrganization.stream()
-                                .filter(opportunity -> opportunity.getStartDateTime().isAfter(LocalDateTime.now()))
+        var allActivitiesOfOrganization = activityRepository.findByOrganizationId(id);
+        return ActivitySummaryOfOrganizationResponse.builder()
+                .totalActivities(allActivitiesOfOrganization.size())
+                .numberOfUpcomingActivity(
+                        allActivitiesOfOrganization.stream()
+                                .filter(activity -> activity.getStartDateTime().isAfter(LocalDateTime.now()))
                                 .toList().size())
-                .numberOfActiveOpportunity(
-                        allOpportunitiesOfOrganization.stream()
-                                .filter(opportunity -> opportunity.getStartDateTime().toLocalDate().isEqual(LocalDateTime.now().toLocalDate()))
+                .numberOfActiveActivity(
+                        allActivitiesOfOrganization.stream()
+                                .filter(activity -> activity.getStartDateTime().toLocalDate().isEqual(LocalDateTime.now().toLocalDate()))
                                 .toList().size())
                 .totalVolunteers(0)
                 .build();
@@ -97,7 +97,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
         var organizationMembers = organizationMembersRepository.findAllByOrganizationId(id).stream()
                 .collect(Collectors.groupingBy(OrganizationMembers::getUserRole));
-        var allOpportunitiesOfOrganization = opportunityRepository.findByOrganizationId(id);
+        var allActivitiesOfOrganization = activityRepository.findByOrganizationId(id);
 
         return OrganizationDetailsResponse.builder()
                 .name(organization.getName())
@@ -112,8 +112,8 @@ public class OrganizationServiceImpl implements OrganizationService {
                                 .toList()
                 )
                 .numberOfFollowers(organizationMembers.getOrDefault(UserRoleInOrganization.FOLLOWER, List.of()).size())
-                .numberOfOpportunity(allOpportunitiesOfOrganization.stream()
-                        .filter(opportunity -> opportunity.getStartDateTime().toLocalDate().isEqual(LocalDateTime.now().toLocalDate()))
+                .numberOfActivity(allActivitiesOfOrganization.stream()
+                        .filter(activity -> activity.getStartDateTime().toLocalDate().isEqual(LocalDateTime.now().toLocalDate()))
                         .toList().size())
                 .build();
     }

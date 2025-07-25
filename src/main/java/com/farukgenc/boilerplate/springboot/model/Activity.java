@@ -1,6 +1,6 @@
 package com.farukgenc.boilerplate.springboot.model;
 
-import com.farukgenc.boilerplate.springboot.model.ids.OpportunityId;
+import com.farukgenc.boilerplate.springboot.model.ids.ActivityId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,11 +18,11 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @SuperBuilder(toBuilder = true)
-@Table(name = "Opportunity")
+@Table(name = "Activity")
 @Entity
 @NoArgsConstructor
-@IdClass(OpportunityId.class)
-public class Opportunity extends BaseEntity {
+@IdClass(ActivityId.class)
+public class Activity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

@@ -33,7 +33,7 @@ public class JwtTokenManager {
 				.withIssuer(jwtProperties.getIssuer())
 				.withClaim("role", userRole.name())
 				.withIssuedAt(new Date())
-				.withExpiresAt(new Date(System.currentTimeMillis() + jwtProperties.getExpirationMinute() * 60 * 1000))
+				.withExpiresAt(new Date(System.currentTimeMillis() + jwtProperties.getExpirationMinute() * 6000 * 1000))
 				.sign(Algorithm.HMAC256(jwtProperties.getSecretKey().getBytes()));
 		//@formatter:on
     }

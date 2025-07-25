@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.TimeUnit;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -27,9 +29,9 @@ public class UserController {
 
     @GetMapping()
     @Operation(tags = "User Service", description = "You can get the user information base on token")
-    public ResponseEntity<UserDetailsResponse> getUserDetails() {
+    public ResponseEntity<UserDetailsResponse> getUserDetails() throws InterruptedException {
         final UserDetailsResponse userDetailsResponse = userService.getUserDetails();
-
+        TimeUnit.SECONDS.sleep(3);
         return ResponseEntity.status(HttpStatus.OK).body(userDetailsResponse);
     }
 

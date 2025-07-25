@@ -21,7 +21,7 @@ import java.util.UUID;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class OpportunityId implements Serializable {
+public class ActivityId implements Serializable {
     @Serial
     private static final long serialVersionUID = -4209093678470383087L;
 

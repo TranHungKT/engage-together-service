@@ -11,9 +11,9 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class OpportunitySummaryOfOrganizationResponse {
-    private Integer numberOfActiveOpportunity;
-    private Integer numberOfUpcomingOpportunity;
+public class ActivitySummaryOfOrganizationResponse {
+    private Integer numberOfActiveActivity;
+    private Integer numberOfUpcomingActivity;
     private Integer totalVolunteers;
-    private Integer totalOpportunities;
+    private Integer totalActivities;
 }

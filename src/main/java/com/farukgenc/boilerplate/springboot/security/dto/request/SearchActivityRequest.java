@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchOpportunityRequest extends CustomPagingRequest {
+public class SearchActivityRequest extends CustomPagingRequest {
     @NotNull
     private String organizationId;
 
