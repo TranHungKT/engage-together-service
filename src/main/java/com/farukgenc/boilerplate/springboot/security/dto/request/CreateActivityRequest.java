@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -35,4 +36,6 @@ public class CreateActivityRequest {
     private String[] requirements;
 
     private String status;
+
+    private List<String> activityCategories;
 }

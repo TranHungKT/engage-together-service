@@ -2,6 +2,8 @@ package com.farukgenc.boilerplate.springboot.security.service.impl;
 
 import com.farukgenc.boilerplate.springboot.common.model.dto.CustomPage;
 import com.farukgenc.boilerplate.springboot.model.Activity;
+import com.farukgenc.boilerplate.springboot.model.ActivityCategory;
+import com.farukgenc.boilerplate.springboot.model.ids.ActivityCategoryId;
 import com.farukgenc.boilerplate.springboot.repository.ActivityRepository;
 import com.farukgenc.boilerplate.springboot.security.dto.request.CreateActivityRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.response.RegistrationResponse;
@@ -16,7 +18,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -33,7 +37,21 @@ public class ActivityServiceImpl implements ActivityService {
         activityValidationService.validateOrganization(UUID.fromString(request.getOrganizationId()));
 
         final Activity activity = ActivityMapper.MAPPER.toActivity(request);
-        activityRepository.save(activity);
+        List<ActivityCategory> activityTypeList = request.getActivityCategories()
+                .stream()
+                .map(activityTypeKey -> ActivityCategory.builder()
+                        .activity(activity)
+                        .id(ActivityCategoryId.builder()
+                                .activityId(activity.getId())
+                                .organizationId(activity.getOrganizationId())
+                                .categoryKey(activityTypeKey)
+                                .build())
+                        .createdBy("SYSTEM")
+                        .build())
+                .collect(Collectors.toUnmodifiableList());
+
+        activity.setCategories(activityTypeList);
+        activityRepository.saveAndFlush(activity);
 
         final String registrationSuccessMessage = generalMessageAccessor.getMessage(null, REGISTRATION_SUCCESSFUL, request.getTitle());
 

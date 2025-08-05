@@ -6,10 +6,14 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+import java.util.UUID;
+
+@Mapper(imports = {UUID.class})
 public interface ActivityMapper {
     ActivityMapper MAPPER = Mappers.getMapper(ActivityMapper.class);
 
     @Mapping(target = "createdBy", constant = "Sample")
+    @Mapping(target = "id", expression = "java(UUID.randomUUID())")
+    @Mapping(target = "categories", ignore = true)
     Activity toActivity(CreateActivityRequest request);
 }
