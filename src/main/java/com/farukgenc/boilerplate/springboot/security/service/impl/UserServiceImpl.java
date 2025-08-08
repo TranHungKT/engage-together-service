@@ -1,7 +1,6 @@
 package com.farukgenc.boilerplate.springboot.security.service.impl;
 
 import com.farukgenc.boilerplate.springboot.exceptions.DataException;
-import com.farukgenc.boilerplate.springboot.model.CustomUserDetails;
 import com.farukgenc.boilerplate.springboot.model.User;
 import com.farukgenc.boilerplate.springboot.model.enums.UserRole;
 import com.farukgenc.boilerplate.springboot.repository.UserRepository;
@@ -75,7 +74,7 @@ public class UserServiceImpl implements UserService {
     public UserDetailsResponse getUserDetails() {
         var userOptional = userRepository.findById(UserDetailUtils.getUserDetailsByToken().getUserId());
 
-        if(userOptional.isEmpty()){
+        if (userOptional.isEmpty()) {
             throw new DataException("User not found");
         }
 

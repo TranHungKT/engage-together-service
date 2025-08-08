@@ -4,7 +4,6 @@ import com.farukgenc.boilerplate.springboot.model.User;
 import com.farukgenc.boilerplate.springboot.security.dto.AuthenticatedUserDto;
 import com.farukgenc.boilerplate.springboot.security.dto.request.LoginRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.response.LoginResponse;
-import com.farukgenc.boilerplate.springboot.security.dto.response.UserDetailsResponse;
 import com.farukgenc.boilerplate.springboot.security.mapper.UserMapper;
 import com.farukgenc.boilerplate.springboot.security.service.UserService;
 import lombok.RequiredArgsConstructor;

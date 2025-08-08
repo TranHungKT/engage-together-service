@@ -4,6 +4,7 @@ import com.farukgenc.boilerplate.springboot.model.Organization;
 import lombok.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface OrganizationRepository extends JpaRepository<Organization, UUID> {
@@ -12,4 +13,6 @@ public interface OrganizationRepository extends JpaRepository<Organization, UUID
     boolean existsByName(String name);
 
     boolean existsById(@NonNull UUID id);
+
+    Optional<Organization> findById(UUID id);
 }

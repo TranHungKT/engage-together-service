@@ -1,5 +1,6 @@
 package com.farukgenc.boilerplate.springboot.model.ids;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,18 +14,21 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.UUID;
 
+@Embeddable
+@ToString
+@EqualsAndHashCode
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
-@Builder(toBuilder = true)
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Embeddable
-public class ActivityId implements Serializable {
+public class ActivityCategoryId implements Serializable {
     @Serial
-    private static final long serialVersionUID = -4209093678470383087L;
+    private static final long serialVersionUID = -769650532677995343L;
 
-    private UUID id;
-    private UUID organizationId;
+    @Column(name = "activity_id")
+    private UUID activityId;
+
+    @Column(name = "category_key")
+    private String categoryKey;
 }

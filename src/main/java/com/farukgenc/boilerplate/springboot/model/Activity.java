@@ -1,11 +1,14 @@
 package com.farukgenc.boilerplate.springboot.model;
 
-import com.farukgenc.boilerplate.springboot.model.ids.ActivityId;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,6 +16,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
@@ -21,14 +26,10 @@ import java.util.UUID;
 @Table(name = "Activity")
 @Entity
 @NoArgsConstructor
-@IdClass(ActivityId.class)
 public class Activity extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(unique = true)
     private UUID id;
-
-    @Id
-    private UUID organizationId;
 
     private String title;
 
@@ -36,4 +37,13 @@ public class Activity extends BaseEntity {
 
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
+
+    private Integer maxAttendees;
+
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ActivityCategory> categories = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "organization_id", nullable = false)
+    private Organization organization;
 }

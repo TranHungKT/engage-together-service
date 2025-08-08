@@ -39,7 +39,7 @@ public class OrganizationValidationService {
         }
     }
 
-    public void throwOrganizationDoNotExistException(UUID id){
+    public void throwOrganizationDoNotExistException(UUID id) {
         log.warn("Organization id {} is not exist", id);
 
         final String existId = exceptionMessageAccessor.getMessage(null, ORGANIZATION_ID_NOT_EXISTS);
