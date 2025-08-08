@@ -115,6 +115,9 @@ public class OrganizationServiceImpl implements OrganizationService {
                 .numberOfActivity(allActivitiesOfOrganization.stream()
                         .filter(activity -> activity.getStartDateTime().toLocalDate().isEqual(LocalDateTime.now().toLocalDate()))
                         .toList().size())
+                .email(organization.getEmail())
+                .phoneNumber(organization.getPhoneNumber())
+                .address(organization.getAddress())
                 .build();
     }
 }

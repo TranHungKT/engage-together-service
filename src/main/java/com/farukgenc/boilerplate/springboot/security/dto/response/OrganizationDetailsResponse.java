@@ -21,6 +21,9 @@ public class OrganizationDetailsResponse {
     private Integer numberOfActivity;
     private Integer numberOfFollowers;
     private List<OrganizationAdmin> admins;
+    private String email;
+    private String phoneNumber;
+    private String address;
 
     @Getter
     @Setter
