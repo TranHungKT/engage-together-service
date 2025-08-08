@@ -1,5 +1,6 @@
 package com.farukgenc.boilerplate.springboot.security.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SearchActivityResponse {
     private UUID id;
     private String title;
@@ -22,9 +24,12 @@ public class SearchActivityResponse {
 
     private UUID organizationId;
 
+    private OrganizationResponse organization;
+
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     static class ActivityCategoryResponse {
         private ActivityCategoryIdResponse id;
     }
@@ -32,6 +37,7 @@ public class SearchActivityResponse {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     static class ActivityCategoryIdResponse {
         private UUID activityId;
         private String categoryKey;
@@ -40,7 +46,19 @@ public class SearchActivityResponse {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     static class OrganizationResponse {
-        private UUID organizationId;
+        private UUID id;
+        private String name;
+        private String email;
+        private String phoneNumber;
+        private String type;
+        private String otherType;
+        private String missionStatement;
+        private String address;
+        private String city;
+        private String stateProvince;
+        private String zipPostalCode;
+        private String country;
     }
 }

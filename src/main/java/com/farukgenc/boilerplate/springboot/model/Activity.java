@@ -28,7 +28,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Activity extends BaseEntity {
     @Id
-    @Column(unique = true)
+    @Column
     private UUID id;
 
     private String title;
