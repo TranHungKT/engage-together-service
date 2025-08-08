@@ -15,5 +15,6 @@ public interface ActivityMapper {
     @Mapping(target = "createdBy", constant = "Sample")
     @Mapping(target = "id", expression = "java(UUID.randomUUID())")
     @Mapping(target = "categories", ignore = true)
+    @Mapping(target = "organization", ignore = true)
     Activity toActivity(CreateActivityRequest request);
 }

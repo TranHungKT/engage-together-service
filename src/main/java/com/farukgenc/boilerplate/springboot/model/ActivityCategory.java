@@ -6,7 +6,6 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
@@ -21,10 +20,6 @@ public class ActivityCategory extends BaseEntity {
     private ActivityCategoryId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "activity_id", referencedColumnName = ActivityId_.ID, insertable = false, updatable = false, nullable = false),
-            @JoinColumn(name = "organization_id", referencedColumnName = ActivityId_.ORGANIZATION_ID, insertable = false, updatable = false, nullable = false)
-
-    })
+    @JoinColumn(name = "activity_id", referencedColumnName = ActivityId_.ID, insertable = false, updatable = false, nullable = false)
     private Activity activity;
 }

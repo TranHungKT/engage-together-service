@@ -1,10 +1,10 @@
 package com.farukgenc.boilerplate.springboot.controller;
 
 import com.farukgenc.boilerplate.springboot.common.model.dto.CustomPage;
-import com.farukgenc.boilerplate.springboot.model.Activity;
 import com.farukgenc.boilerplate.springboot.security.dto.request.CreateActivityRequest;
-import com.farukgenc.boilerplate.springboot.security.dto.response.RegistrationResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.request.SearchActivityRequest;
+import com.farukgenc.boilerplate.springboot.security.dto.response.RegistrationResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.response.SearchActivityResponse;
 import com.farukgenc.boilerplate.springboot.security.service.ActivityService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -31,8 +31,8 @@ public class ActivityController {
 
     @PostMapping("/search")
     @Operation(tags = "Activity Service", description = "You can search opportunities.")
-    public ResponseEntity<CustomPage<Activity>> searchActivity(@Valid @RequestBody SearchActivityRequest request) {
-        CustomPage<Activity> activityCustomPage = activityService.searchActivity(request);
+    public ResponseEntity<CustomPage<SearchActivityResponse>> searchActivity(@Valid @RequestBody SearchActivityRequest request) {
+        CustomPage<SearchActivityResponse> activityCustomPage = activityService.searchActivity(request);
         return ResponseEntity.status(HttpStatus.OK).body(activityCustomPage);
     }
 }

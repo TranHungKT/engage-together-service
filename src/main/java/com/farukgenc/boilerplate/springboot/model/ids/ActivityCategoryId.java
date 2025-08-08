@@ -29,9 +29,6 @@ public class ActivityCategoryId implements Serializable {
     @Column(name = "activity_id")
     private UUID activityId;
 
-    @Column(name = "organization_id")
-    private UUID organizationId;
-
     @Column(name = "category_key")
     private String categoryKey;
 }

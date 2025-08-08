@@ -38,4 +38,6 @@ public class CreateActivityRequest {
     private String status;
 
     private List<String> activityCategories;
+
+    private Integer maxAttendees;
 }
