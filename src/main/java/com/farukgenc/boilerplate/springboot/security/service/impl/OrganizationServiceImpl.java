@@ -2,10 +2,10 @@ package com.farukgenc.boilerplate.springboot.security.service.impl;
 
 import com.farukgenc.boilerplate.springboot.exceptions.RegistrationException;
 import com.farukgenc.boilerplate.springboot.model.Organization;
-import com.farukgenc.boilerplate.springboot.model.OrganizationMembers;
+import com.farukgenc.boilerplate.springboot.model.OrganizationMember;
 import com.farukgenc.boilerplate.springboot.model.enums.UserRoleInOrganization;
 import com.farukgenc.boilerplate.springboot.repository.ActivityRepository;
-import com.farukgenc.boilerplate.springboot.repository.OrganizationMembersRepository;
+import com.farukgenc.boilerplate.springboot.repository.OrganizationMemberRepository;
 import com.farukgenc.boilerplate.springboot.repository.OrganizationRepository;
 import com.farukgenc.boilerplate.springboot.repository.UserRepository;
 import com.farukgenc.boilerplate.springboot.security.dto.response.ActivitySummaryOfOrganizationResponse;
@@ -42,7 +42,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     private final ActivityRepository activityRepository;
 
     private final GeneralMessageAccessor generalMessageAccessor;
-    private final OrganizationMembersRepository organizationMembersRepository;
+    private final OrganizationMemberRepository organizationMemberRepository;
     private final UserRepository userRepository;
 
     @Transactional
@@ -57,8 +57,8 @@ public class OrganizationServiceImpl implements OrganizationService {
         if (user.isEmpty()) {
             throw new RegistrationException("User not exist");
         }
-        var member = OrganizationMembers.builder().user(user.get()).organization(savedOrganization).createdBy(user.get().getUsername()).userRole(UserRoleInOrganization.ADMIN).build();
-        organizationMembersRepository.save(member);
+        var member = OrganizationMember.builder().user(user.get()).organization(savedOrganization).createdBy(user.get().getUsername()).userRole(UserRoleInOrganization.ADMIN).build();
+        organizationMemberRepository.save(member);
         final String registrationSuccessMessage = generalMessageAccessor.getMessage(null, REGISTRATION_SUCCESSFUL, registrationOrganizationRequest.getName());
 
         log.info("{} registered successful!", registrationOrganizationRequest.getName());
@@ -95,8 +95,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 
         var organization = organizationOpt.get();
 
-        var organizationMembers = organizationMembersRepository.findAllByOrganizationId(id).stream()
-                .collect(Collectors.groupingBy(OrganizationMembers::getUserRole));
+        var organizationMembers = organizationMemberRepository.findAllByOrganizationId(id).stream()
+                .collect(Collectors.groupingBy(OrganizationMember::getUserRole));
         var allActivitiesOfOrganization = activityRepository.findByOrganizationId(id);
 
         return OrganizationDetailsResponse.builder()

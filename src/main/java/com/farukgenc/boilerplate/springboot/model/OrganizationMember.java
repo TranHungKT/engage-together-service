@@ -1,6 +1,5 @@
 package com.farukgenc.boilerplate.springboot.model;
 
-import com.farukgenc.boilerplate.springboot.model.User_;
 import com.farukgenc.boilerplate.springboot.model.enums.UserRoleInOrganization;
 import com.farukgenc.boilerplate.springboot.model.ids.OrganizationId_;
 import com.farukgenc.boilerplate.springboot.model.ids.OrganizationMembersId;
@@ -28,8 +27,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @IdClass(OrganizationMembersId.class)
-@Table(name = "organization_members")
-public class OrganizationMembers extends BaseEntity {
+@Table(name = "organization_member")
+public class OrganizationMember extends BaseEntity {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Id
