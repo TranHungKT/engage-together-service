@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -40,4 +41,6 @@ public class CreateActivityRequest {
     private List<String> activityCategories;
 
     private Integer maxAttendees;
+
+    private List<UUID> adminUsers;
 }

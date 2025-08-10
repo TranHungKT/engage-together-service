@@ -15,6 +15,7 @@ import com.farukgenc.boilerplate.springboot.security.mapper.ActivityMapper;
 import com.farukgenc.boilerplate.springboot.security.mapper.BasicMapper;
 import com.farukgenc.boilerplate.springboot.security.service.ActivityService;
 import com.farukgenc.boilerplate.springboot.service.ActivityValidationService;
+import com.farukgenc.boilerplate.springboot.service.OrganizationValidationService;
 import com.farukgenc.boilerplate.springboot.utils.GeneralMessageAccessor;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,7 @@ public class ActivityServiceImpl implements ActivityService {
     private static final String DEFAULT_SORT_FIELD = "title";
 
     private final ActivityValidationService activityValidationService;
+    private final OrganizationValidationService organizationValidationService;
     private final ActivityRepository activityRepository;
     private final GeneralMessageAccessor generalMessageAccessor;
     private final BasicMapper basicMapper;
@@ -44,6 +46,7 @@ public class ActivityServiceImpl implements ActivityService {
 
     public RegistrationResponse createNewActivity(CreateActivityRequest request) {
         activityValidationService.validateOrganization(UUID.fromString(request.getOrganizationId()));
+        organizationValidationService.validateAdminUser(request.getAdminUsers(), UUID.fromString(request.getOrganizationId()));
         var organization = organizationRepository.findById(UUID.fromString(request.getOrganizationId()));
 
         assert organization.isPresent();
