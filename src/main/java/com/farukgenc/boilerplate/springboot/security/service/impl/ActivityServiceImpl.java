@@ -3,9 +3,13 @@ package com.farukgenc.boilerplate.springboot.security.service.impl;
 import com.farukgenc.boilerplate.springboot.common.model.dto.CustomPage;
 import com.farukgenc.boilerplate.springboot.model.Activity;
 import com.farukgenc.boilerplate.springboot.model.ActivityCategory;
+import com.farukgenc.boilerplate.springboot.model.ActivityParticipant;
+import com.farukgenc.boilerplate.springboot.model.User;
+import com.farukgenc.boilerplate.springboot.model.enums.UserRoleInActivity;
 import com.farukgenc.boilerplate.springboot.model.ids.ActivityCategoryId;
 import com.farukgenc.boilerplate.springboot.repository.ActivityRepository;
 import com.farukgenc.boilerplate.springboot.repository.OrganizationRepository;
+import com.farukgenc.boilerplate.springboot.repository.UserRepository;
 import com.farukgenc.boilerplate.springboot.repository.projections.ActivityProjection;
 import com.farukgenc.boilerplate.springboot.security.dto.request.CreateActivityRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.request.SearchActivityRequest;
@@ -14,7 +18,6 @@ import com.farukgenc.boilerplate.springboot.security.dto.response.SearchActivity
 import com.farukgenc.boilerplate.springboot.security.mapper.ActivityMapper;
 import com.farukgenc.boilerplate.springboot.security.mapper.BasicMapper;
 import com.farukgenc.boilerplate.springboot.security.service.ActivityService;
-import com.farukgenc.boilerplate.springboot.service.ActivityValidationService;
 import com.farukgenc.boilerplate.springboot.service.OrganizationValidationService;
 import com.farukgenc.boilerplate.springboot.utils.GeneralMessageAccessor;
 import jakarta.transaction.Transactional;
@@ -26,7 +29,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -37,17 +40,20 @@ public class ActivityServiceImpl implements ActivityService {
     private static final String REGISTRATION_SUCCESSFUL = "registration_successful";
     private static final String DEFAULT_SORT_FIELD = "title";
 
-    private final ActivityValidationService activityValidationService;
     private final OrganizationValidationService organizationValidationService;
     private final ActivityRepository activityRepository;
     private final GeneralMessageAccessor generalMessageAccessor;
     private final BasicMapper basicMapper;
     private final OrganizationRepository organizationRepository;
+    private final UserRepository userRepository;
 
     public RegistrationResponse createNewActivity(CreateActivityRequest request) {
-        activityValidationService.validateOrganization(UUID.fromString(request.getOrganizationId()));
-        organizationValidationService.validateAdminUser(request.getAdminUsers(), UUID.fromString(request.getOrganizationId()));
-        var organization = organizationRepository.findById(UUID.fromString(request.getOrganizationId()));
+        var organization = organizationRepository.findById(request.getOrganizationId());
+
+        organizationValidationService.validateOrganizationIsNotExist(organization);
+        organizationValidationService.validateAdminUser(request.getAdminUsers(), request.getOrganizationId());
+
+        var userMap = userRepository.findAllByIdIn(request.getAdminUsers()).stream().collect(Collectors.toMap(User::getId, Function.identity()));
 
         assert organization.isPresent();
 
@@ -64,8 +70,20 @@ public class ActivityServiceImpl implements ActivityService {
                         .build())
                 .collect(Collectors.toUnmodifiableList());
 
+        List<ActivityParticipant> adminsOfActivity = request.getAdminUsers().stream().map(
+                userId -> ActivityParticipant.builder()
+                        .activityId(activity.getId())
+                        .userId(userId)
+                        .userRole(UserRoleInActivity.ADMIN)
+                        .activity(activity)
+                        .user(userMap.get(userId))
+                        .createdBy("SYSTEM")
+                        .build()).collect(Collectors.toUnmodifiableList());
+
+        activity.setActivityParticipants(adminsOfActivity);
         activity.setCategories(activityTypeList);
         activity.setOrganization(organization.get());
+
         activityRepository.saveAndFlush(activity);
 
         final String registrationSuccessMessage = generalMessageAccessor.getMessage(null, REGISTRATION_SUCCESSFUL, request.getTitle());

@@ -15,7 +15,7 @@ import java.util.UUID;
 @ToString
 @NoArgsConstructor
 public class CreateActivityRequest {
-    private String organizationId;
+    private UUID organizationId;
 
     @NotEmpty(message = "not empty")
     private String title;

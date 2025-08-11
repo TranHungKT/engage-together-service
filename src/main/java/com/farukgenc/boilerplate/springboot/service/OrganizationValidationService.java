@@ -2,6 +2,7 @@ package com.farukgenc.boilerplate.springboot.service;
 
 import com.farukgenc.boilerplate.springboot.exceptions.DataException;
 import com.farukgenc.boilerplate.springboot.exceptions.RegistrationException;
+import com.farukgenc.boilerplate.springboot.model.Organization;
 import com.farukgenc.boilerplate.springboot.model.OrganizationMember;
 import com.farukgenc.boilerplate.springboot.repository.OrganizationMemberRepository;
 import com.farukgenc.boilerplate.springboot.repository.OrganizationRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -24,7 +26,6 @@ public class OrganizationValidationService {
     private static final String NAME_ALREADY_EXISTS = "organization_name_exists";
     private static final String ORGANIZATION_ID_NOT_EXISTS = "organization_id_not_exist";
 
-    private static final String USER_NOT_IN_ORGANIZATION = "user_not_in_organization";
 
     private final OrganizationRepository organizationRepository;
     private final OrganizationMemberRepository organizationMemberRepository;
@@ -54,11 +55,18 @@ public class OrganizationValidationService {
         if(!cloneAdminUsers.isEmpty()) {
             log.warn("Some user id {} is not in organization", cloneAdminUsers);
 
-            final String userNotInOrg = exceptionMessageAccessor.getMessage(null, USER_NOT_IN_ORGANIZATION);
-            throw new DataException(userNotInOrg);
+            throw new RegistrationException("Some user do not belong to organization");
         }
     }
 
+    public void validateOrganizationIsNotExist(Optional<Organization> organizationOpt) {
+
+        if (organizationOpt.isEmpty()) {
+            log.warn("Organization is not exist");
+
+            throw new RegistrationException("Organization is not exist");
+        }
+    }
     public void throwOrganizationDoNotExistException(UUID id) {
         log.warn("Organization id {} is not exist", id);
 
