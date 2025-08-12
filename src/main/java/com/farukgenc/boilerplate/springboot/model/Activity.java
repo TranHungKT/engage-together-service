@@ -40,8 +40,11 @@ public class Activity extends BaseEntity {
 
     private Integer maxAttendees;
 
-    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = ActivityCategory_.ACTIVITY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ActivityCategory> categories = new ArrayList<>();
+
+    @OneToMany(mappedBy = ActivityParticipant_.ACTIVITY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ActivityParticipant> activityParticipants = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "organization_id", nullable = false)

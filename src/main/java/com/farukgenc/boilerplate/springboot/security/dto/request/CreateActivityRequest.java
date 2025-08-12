@@ -8,13 +8,14 @@ import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 public class CreateActivityRequest {
-    private String organizationId;
+    private UUID organizationId;
 
     @NotEmpty(message = "not empty")
     private String title;
@@ -40,4 +41,6 @@ public class CreateActivityRequest {
     private List<String> activityCategories;
 
     private Integer maxAttendees;
+
+    private List<UUID> adminUsers;
 }
