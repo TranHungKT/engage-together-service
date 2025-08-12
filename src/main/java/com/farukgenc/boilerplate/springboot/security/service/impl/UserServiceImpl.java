@@ -6,8 +6,11 @@ import com.farukgenc.boilerplate.springboot.model.enums.UserRole;
 import com.farukgenc.boilerplate.springboot.repository.UserRepository;
 import com.farukgenc.boilerplate.springboot.security.dto.AuthenticatedUserDto;
 import com.farukgenc.boilerplate.springboot.security.dto.request.RegistrationRequest;
+import com.farukgenc.boilerplate.springboot.security.dto.request.SearchUserRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.response.RegistrationResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.response.SearchUserResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.response.UserDetailsResponse;
+import com.farukgenc.boilerplate.springboot.security.mapper.BasicMapper;
 import com.farukgenc.boilerplate.springboot.security.mapper.UserMapper;
 import com.farukgenc.boilerplate.springboot.security.service.UserService;
 import com.farukgenc.boilerplate.springboot.security.utils.UserDetailUtils;
@@ -17,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created on Ağustos, 2020
@@ -37,7 +42,7 @@ public class UserServiceImpl implements UserService {
     private final UserValidationService userValidationService;
 
     private final GeneralMessageAccessor generalMessageAccessor;
-
+    private final BasicMapper basicMapper;
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
@@ -85,5 +90,10 @@ public class UserServiceImpl implements UserService {
                 .email(user.getEmail())
                 .username(user.getUsername())
                 .build();
+    }
+
+    @Override
+    public List<SearchUserResponse> searchUser(SearchUserRequest request) {
+        return basicMapper.convertToResponseList(userRepository.searchUser(request.getOrganizationId(), request.getUsername()), SearchUserResponse.class);
     }
 }
