@@ -24,6 +24,4 @@ public interface ActivityProjection {
     UUID getOrganizationId();
 
     OrganizationProjection getOrganization();
-
-
 }

@@ -7,17 +7,22 @@ import com.farukgenc.boilerplate.springboot.model.ActivityParticipant;
 import com.farukgenc.boilerplate.springboot.model.User;
 import com.farukgenc.boilerplate.springboot.model.enums.UserRoleInActivity;
 import com.farukgenc.boilerplate.springboot.model.ids.ActivityCategoryId;
+import com.farukgenc.boilerplate.springboot.repository.ActivityCategoryRepository;
+import com.farukgenc.boilerplate.springboot.repository.ActivityParticipantRepository;
 import com.farukgenc.boilerplate.springboot.repository.ActivityRepository;
 import com.farukgenc.boilerplate.springboot.repository.OrganizationRepository;
 import com.farukgenc.boilerplate.springboot.repository.UserRepository;
 import com.farukgenc.boilerplate.springboot.repository.projections.ActivityProjection;
+import com.farukgenc.boilerplate.springboot.repository.projections.ParticipantProjection;
 import com.farukgenc.boilerplate.springboot.security.dto.request.CreateActivityRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.request.SearchActivityRequest;
+import com.farukgenc.boilerplate.springboot.security.dto.response.GetActivityDetailsResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.response.RegistrationResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.response.SearchActivityResponse;
 import com.farukgenc.boilerplate.springboot.security.mapper.ActivityMapper;
 import com.farukgenc.boilerplate.springboot.security.mapper.BasicMapper;
 import com.farukgenc.boilerplate.springboot.security.service.ActivityService;
+import com.farukgenc.boilerplate.springboot.service.ActivityValidationService;
 import com.farukgenc.boilerplate.springboot.service.OrganizationValidationService;
 import com.farukgenc.boilerplate.springboot.utils.GeneralMessageAccessor;
 import jakarta.transaction.Transactional;
@@ -29,6 +34,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -41,11 +47,14 @@ public class ActivityServiceImpl implements ActivityService {
     private static final String DEFAULT_SORT_FIELD = "title";
 
     private final OrganizationValidationService organizationValidationService;
+    private final ActivityValidationService activityValidationService;
     private final ActivityRepository activityRepository;
     private final GeneralMessageAccessor generalMessageAccessor;
     private final BasicMapper basicMapper;
     private final OrganizationRepository organizationRepository;
     private final UserRepository userRepository;
+    private final ActivityParticipantRepository activityParticipantRepository;
+    private final ActivityCategoryRepository activityCategoryRepository;
 
     public RegistrationResponse createNewActivity(CreateActivityRequest request) {
         var organization = organizationRepository.findById(request.getOrganizationId());
@@ -101,5 +110,37 @@ public class ActivityServiceImpl implements ActivityService {
         Page<SearchActivityResponse> listActivity = new PageImpl<>(activities.getContent().stream().map(activity -> basicMapper.convertToResponse(activity, SearchActivityResponse.class)).toList());
 
         return CustomPage.of(listActivity.getContent(), activities);
+    }
+
+    @Override
+    public GetActivityDetailsResponse getActivityDetails(UUID activityId) {
+        var activityOptional = activityRepository.findById(activityId);
+        activityValidationService.validateActivity(activityOptional);
+        assert activityOptional.isPresent();
+
+        var activityParticipants = activityParticipantRepository.findByActivityId(activityId).stream().map(
+                activityParticipant -> GetActivityDetailsResponse.UserResponse.builder()
+                        .userId(activityParticipant.getUserId())
+                        .username(activityParticipant.getUser().getUsername())
+                        .name(activityParticipant.getUser().getName())
+                        .email(activityParticipant.getUser().getName())
+                        .userRoleInActivity(activityParticipant.getUserRole())
+                        .build()
+        ).toList();
+
+        var activityCategories = activityCategoryRepository.findAllByIdActivityId(activityId).stream()
+                .map(category -> category.getId().getCategoryKey()).toList();
+
+        var activity = activityOptional.get();
+
+        return GetActivityDetailsResponse.builder()
+                .id(activityId)
+                .title(activity.getTitle())
+                .description(activity.getDescription())
+                .startDateTime(activity.getStartDateTime())
+                .endDateTime(activity.getEndDateTime())
+                .users(activityParticipants)
+                .categories(activityCategories)
+                .build();
     }
 }
