@@ -41,4 +41,14 @@ public class GetActivityDetailsResponse {
         private String email;
         private UserRoleInActivity userRoleInActivity;
     }
+
+    private String address;
+
+    private String stateProvince;
+
+    private String city;
+
+    private String postalCode;
+
+    private String country;
 }

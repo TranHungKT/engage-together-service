@@ -22,25 +22,25 @@ public class CreateActivityRequest {
 
     private String description;
 
-    private String address;
-
-    private String city;
-
-    private String zipCode;
-
-//    @NotEmpty(message = "not empty")
     private LocalDateTime startDateTime;
 
-//    @NotEmpty(message = "not empty")
     private LocalDateTime endDateTime;
 
     private String[] requirements;
-
-    private String status;
 
     private List<String> activityCategories;
 
     private Integer maxAttendees;
 
     private List<UUID> adminUsers;
+
+    private String address;
+
+    private String stateProvince;
+
+    private String city;
+
+    private String postalCode;
+
+    private String country;
 }

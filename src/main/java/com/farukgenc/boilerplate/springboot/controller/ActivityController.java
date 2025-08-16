@@ -27,7 +27,7 @@ import java.util.UUID;
 public class ActivityController {
     private final ActivityService activityService;
 
-    @PostMapping("/register")
+    @PostMapping("/create")
     @Operation(tags = "Activity Service", description = "You can register new activity by sending information in the appropriate format.")
     public ResponseEntity<RegistrationResponse> createNewActivity(@Valid @RequestBody CreateActivityRequest request) {
         final RegistrationResponse createActivityResponse = activityService.createNewActivity(request);
