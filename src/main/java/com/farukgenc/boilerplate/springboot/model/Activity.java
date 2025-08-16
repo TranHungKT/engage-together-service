@@ -40,6 +40,16 @@ public class Activity extends BaseEntity {
 
     private Integer maxAttendees;
 
+    private String address;
+
+    private String stateProvince;
+
+    private String city;
+
+    private String postalCode;
+
+    private String country;
+
     @OneToMany(mappedBy = ActivityCategory_.ACTIVITY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ActivityCategory> categories = new ArrayList<>();
 

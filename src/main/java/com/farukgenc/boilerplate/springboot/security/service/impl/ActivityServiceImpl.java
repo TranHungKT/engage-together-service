@@ -139,6 +139,11 @@ public class ActivityServiceImpl implements ActivityService {
                 .description(activity.getDescription())
                 .startDateTime(activity.getStartDateTime())
                 .endDateTime(activity.getEndDateTime())
+                .address(activity.getAddress())
+                .stateProvince(activity.getStateProvince())
+                .city(activity.getCity())
+                .postalCode(activity.getPostalCode())
+                .country(activity.getCountry())
                 .users(activityParticipants)
                 .categories(activityCategories)
                 .build();
