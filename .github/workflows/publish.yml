@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - setup_actions
 
 jobs:
   build:
@@ -35,16 +36,28 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Login to Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push docker image
-        uses: docker/build-push-action@v4
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
         with:
-          context: .
           push: true
-          tags: |
-            omerfarukgenc34/spring-boot-boilerplate:${{steps.project.outputs.version}}
-            omerfarukgenc34/spring-boot-boilerplate:latest
+          tags: tranhungkt/service:latest
+
+
+  deploy:
+    needs: build
+    runs-on: engage-service-aws
+    steps:
+      - name: Pull image from docker hub
+        run: docker pull tranhungkt/service:latest
+      - name: Delete old container
+        run: docker rm -f engage-together-service-container
+      - name: Run docker container
+        run: docker run -d --name engage-together-service-container tranhungkt/service

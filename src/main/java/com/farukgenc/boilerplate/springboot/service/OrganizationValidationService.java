@@ -70,8 +70,7 @@ public class OrganizationValidationService {
     public void throwOrganizationDoNotExistException(UUID id) {
         log.warn("Organization id {} is not exist", id);
 
-        final String existId = exceptionMessageAccessor.getMessage(null, ORGANIZATION_ID_NOT_EXISTS);
-        throw new DataException(existId);
+        throw new DataException("Organization id {} is not exist");
     }
 
     private void checkEmail(String email) {

@@ -1,5 +1,6 @@
 package com.farukgenc.boilerplate.springboot.security.dto.request;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class CreateActivityRequest {
     @NotEmpty(message = "not empty")
     private String title;
 
+    @Column(length = 10000)
     private String description;
 
     private LocalDateTime startDateTime;
