@@ -13,7 +13,6 @@ import com.farukgenc.boilerplate.springboot.repository.ActivityRepository;
 import com.farukgenc.boilerplate.springboot.repository.OrganizationRepository;
 import com.farukgenc.boilerplate.springboot.repository.UserRepository;
 import com.farukgenc.boilerplate.springboot.repository.projections.ActivityProjection;
-import com.farukgenc.boilerplate.springboot.repository.projections.ParticipantProjection;
 import com.farukgenc.boilerplate.springboot.security.dto.request.CreateActivityRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.request.SearchActivityRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.response.GetActivityDetailsResponse;

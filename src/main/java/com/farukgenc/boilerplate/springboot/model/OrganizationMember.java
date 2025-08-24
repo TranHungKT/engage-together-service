@@ -1,7 +1,6 @@
 package com.farukgenc.boilerplate.springboot.model;
 
 import com.farukgenc.boilerplate.springboot.model.enums.UserRoleInOrganization;
-import com.farukgenc.boilerplate.springboot.model.ids.OrganizationId_;
 import com.farukgenc.boilerplate.springboot.model.ids.OrganizationMembersId;
 import com.farukgenc.boilerplate.springboot.model.ids.OrganizationMembersId_;
 import jakarta.persistence.Column;
@@ -19,11 +18,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.Length;

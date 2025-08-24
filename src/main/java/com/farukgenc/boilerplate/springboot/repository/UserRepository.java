@@ -24,8 +24,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     List<User> findAllByIdIn(Collection<UUID> userIds);
 
     @Query(
-            "select u from User u join OrganizationMember om on u.id = om.userId and om.organizationId = :organizationId " +
-                    "where u.username like %:username%"
+            "select u from User u join OrganizationMember om on u.id = om.userId and om.organizationId = :organizationId "
+                    + "where u.username like %:username%"
     )
     List<User> searchUser(UUID organizationId, String username);
 
