@@ -55,9 +55,7 @@ jobs:
     needs: build
     runs-on: engage-service-aws
     steps:
-      - name: Pull image from docker hub
-        run: docker pull tranhungkt/service:latest
-      - name: Delete old container
-        run: docker rm -f engage-together-service-container
-      - name: Run docker container
-        run: docker run -d --name engage-together-service-container tranhungkt/service
+      - name: Pull docker-compose
+        run: wget https://github.com/TranHungKT/engage-together-service/blob/setup_actions/docker-compose.yml
+      - name: Run docker compose
+        run: docker-compose -f docker-compose.yml up

@@ -18,7 +18,7 @@ services:
 
   app:
     container_name: app
-    build: .
+    image: tranhungkt/service
     ports:
       - "8080:8080"
     platform: linux/amd64
