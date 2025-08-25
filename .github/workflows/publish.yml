@@ -55,6 +55,8 @@ jobs:
     needs: build
     runs-on: engage-service-aws
     steps:
+      - name: remove old compose
+        run: rm -rf docker-compose.yml
       - name: Pull docker-compose
         run: wget https://github.com/TranHungKT/engage-together-service/raw/setup_actions/docker-compose.yml
       - name: log file
