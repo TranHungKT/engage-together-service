@@ -55,6 +55,10 @@ jobs:
     needs: build
     runs-on: engage-service-aws
     steps:
+      - name: compose-down
+        run: docker compose down
+      - name: remove old image
+        run: docker rmi -f postgres tranhungkt/service
       - name: remove old compose
         run: rm -rf docker-compose.yml
       - name: Pull docker-compose
