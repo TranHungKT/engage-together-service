@@ -57,5 +57,7 @@ jobs:
     steps:
       - name: Pull docker-compose
         run: wget https://github.com/TranHungKT/engage-together-service/raw/setup_actions/docker-compose.yml
+      - name: log file
+        run: cat docker-compose.yml
       - name: Run docker compose
         run: docker compose -f docker-compose.yml up
