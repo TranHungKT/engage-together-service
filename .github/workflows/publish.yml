@@ -56,6 +56,6 @@ jobs:
     runs-on: engage-service-aws
     steps:
       - name: Pull docker-compose
-        run: sed -i https://github.com/TranHungKT/engage-together-service/blob/setup_actions/docker-compose.yml docker-compose.yml
+        run: sed -i 'https://github.com/TranHungKT/engage-together-service/blob/setup_actions/docker-compose.yml' docker-compose.yml
       - name: Run docker compose
         run: docker compose -f docker-compose.yml up
