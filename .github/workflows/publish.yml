@@ -3,7 +3,6 @@ name: Build Maven Package And Publish Docker Image
 on:
   push:
     branches:
-      - master
       - setup_actions
 
 jobs:
