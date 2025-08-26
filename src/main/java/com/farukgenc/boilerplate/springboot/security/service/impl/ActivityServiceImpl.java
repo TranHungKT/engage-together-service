@@ -14,13 +14,17 @@ import com.farukgenc.boilerplate.springboot.repository.OrganizationRepository;
 import com.farukgenc.boilerplate.springboot.repository.UserRepository;
 import com.farukgenc.boilerplate.springboot.repository.projections.ActivityProjection;
 import com.farukgenc.boilerplate.springboot.security.dto.request.CreateActivityRequest;
+import com.farukgenc.boilerplate.springboot.security.dto.request.JoinActivityRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.request.SearchActivityRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.response.GetActivityDetailsResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.response.JoinActivityResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.response.RegistrationResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.response.SearchActivityResponse;
 import com.farukgenc.boilerplate.springboot.security.mapper.ActivityMapper;
 import com.farukgenc.boilerplate.springboot.security.mapper.BasicMapper;
 import com.farukgenc.boilerplate.springboot.security.service.ActivityService;
+import com.farukgenc.boilerplate.springboot.security.utils.UserDetailUtils;
+import com.farukgenc.boilerplate.springboot.service.ActivityParticipantValidationService;
 import com.farukgenc.boilerplate.springboot.service.ActivityValidationService;
 import com.farukgenc.boilerplate.springboot.service.OrganizationValidationService;
 import com.farukgenc.boilerplate.springboot.utils.GeneralMessageAccessor;
@@ -47,6 +51,7 @@ public class ActivityServiceImpl implements ActivityService {
 
     private final OrganizationValidationService organizationValidationService;
     private final ActivityValidationService activityValidationService;
+    private final ActivityParticipantValidationService activityParticipantValidationService;
     private final ActivityRepository activityRepository;
     private final GeneralMessageAccessor generalMessageAccessor;
     private final BasicMapper basicMapper;
@@ -146,5 +151,30 @@ public class ActivityServiceImpl implements ActivityService {
                 .users(activityParticipants)
                 .categories(activityCategories)
                 .build();
+    }
+
+    @Override
+    public JoinActivityResponse joinActivity(JoinActivityRequest request) {
+        var userOptional = userRepository.findById(UserDetailUtils.getUserDetailsByToken().getUserId());
+
+        var activityOptional = activityRepository.findById(request.getActivityId());
+        activityValidationService.validateActivity(activityOptional);
+
+        assert activityOptional.isPresent();
+        assert userOptional.isPresent();
+
+        var currentActivityParticipants = activityParticipantRepository.findByActivityId(activityOptional.get().getId());
+        activityParticipantValidationService.validateParticipantAlreadyJoin(userOptional.get().getId(), currentActivityParticipants);
+
+        var newActivityParticipant = ActivityParticipant.builder()
+                .userId(userOptional.get().getId())
+                .activityId(activityOptional.get().getId())
+                .user(userOptional.get())
+                .activity(activityOptional.get())
+                .userRole(request.getRole())
+                .createdBy("SYSTEM")
+                .build();
+        activityParticipantRepository.save(newActivityParticipant);
+        return new JoinActivityResponse("Join activity success");
     }
 }

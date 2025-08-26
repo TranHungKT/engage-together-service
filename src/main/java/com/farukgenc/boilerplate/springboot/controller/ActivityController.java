@@ -2,8 +2,10 @@ package com.farukgenc.boilerplate.springboot.controller;
 
 import com.farukgenc.boilerplate.springboot.common.model.dto.CustomPage;
 import com.farukgenc.boilerplate.springboot.security.dto.request.CreateActivityRequest;
+import com.farukgenc.boilerplate.springboot.security.dto.request.JoinActivityRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.request.SearchActivityRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.response.GetActivityDetailsResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.response.JoinActivityResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.response.RegistrationResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.response.SearchActivityResponse;
 import com.farukgenc.boilerplate.springboot.security.service.ActivityService;
@@ -47,5 +49,13 @@ public class ActivityController {
             @PathVariable UUID id
     ) {
         return ResponseEntity.status(HttpStatus.OK).body(activityService.getActivityDetails(id));
+    }
+
+    @PostMapping("/join-activity")
+    @Operation(tags = "Join activity")
+    public ResponseEntity<JoinActivityResponse> joinActivity(
+            @Valid @RequestBody JoinActivityRequest request
+    ) {
+        return ResponseEntity.status(HttpStatus.OK).body(activityService.joinActivity(request));
     }
 }
