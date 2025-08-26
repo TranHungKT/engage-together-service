@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -24,8 +23,6 @@ import java.util.stream.Collectors;
 public class OrganizationValidationService {
     private static final String EMAIL_ALREADY_EXISTS = "organization_email_exists";
     private static final String NAME_ALREADY_EXISTS = "organization_name_exists";
-    private static final String ORGANIZATION_ID_NOT_EXISTS = "organization_id_not_exist";
-
 
     private final OrganizationRepository organizationRepository;
     private final OrganizationMemberRepository organizationMemberRepository;
@@ -52,7 +49,7 @@ public class OrganizationValidationService {
 
         var cloneAdminUsers = new ArrayList<>(adminUsers);
         cloneAdminUsers.removeAll(organizationMembers);
-        if(!cloneAdminUsers.isEmpty()) {
+        if (!cloneAdminUsers.isEmpty()) {
             log.warn("Some user id {} is not in organization", cloneAdminUsers);
 
             throw new RegistrationException("Some user do not belong to organization");
@@ -67,11 +64,11 @@ public class OrganizationValidationService {
             throw new RegistrationException("Organization is not exist");
         }
     }
+
     public void throwOrganizationDoNotExistException(UUID id) {
         log.warn("Organization id {} is not exist", id);
 
-        final String existId = exceptionMessageAccessor.getMessage(null, ORGANIZATION_ID_NOT_EXISTS);
-        throw new DataException(existId);
+        throw new DataException("Organization id {} is not exist");
     }
 
     private void checkEmail(String email) {

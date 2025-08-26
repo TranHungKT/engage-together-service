@@ -8,15 +8,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public interface ActivityRepository extends JpaRepository<Activity, UUID> {
     List<Activity> findByOrganizationId(UUID organizationId);
 
-    @Query("select a.id as id, a.title as title, a.description as description, a.startDateTime as startDateTime, a.endDateTime as endDateTime, a.maxAttendees as maxAttendees, a.organization.id as organizationId, ac as categories, o as organization " +
-            "from Activity a JOIN ActivityCategory ac ON a.id = ac.id.activityId " +
-            "JOIN Organization o on a.organization.id = a.organization.id " +
-            "where a.title like %:title% or :title is null or :title =''")
+    @Query("select a.id as id, a.title as title, a.description as description, a.startDateTime as startDateTime, a.endDateTime as endDateTime, a.maxAttendees as maxAttendees, a.organization.id as organizationId, ac as categories, o as organization "
+            + "from Activity a JOIN ActivityCategory ac ON a.id = ac.id.activityId "
+            + "JOIN Organization o on a.organization.id = a.organization.id "
+            + "where a.title like %:title% or :title is null or :title =''")
     Page<ActivityProjection> searchActivity(String title, Pageable pageable);
 }

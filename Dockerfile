@@ -6,6 +6,8 @@ FROM maven:3.8.4-openjdk-17 AS builder
 WORKDIR /app
 
 COPY pom.xml .
+COPY checkstyle.xml .
+COPY checkstyle-suppressions.xml .
 RUN mvn -B dependency:go-offline
 
 COPY src src
