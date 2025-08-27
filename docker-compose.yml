@@ -4,6 +4,8 @@ services:
     container_name: db
     image: postgres
     restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     environment:
@@ -37,3 +39,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
+volumes:
+  pgdata:
