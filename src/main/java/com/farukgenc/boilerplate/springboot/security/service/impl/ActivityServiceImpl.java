@@ -109,9 +109,13 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public CustomPage<SearchActivityResponse> searchActivity(SearchActivityRequest request) {
         Pageable pageable = request.toPageable(DEFAULT_SORT_FIELD);
-        Page<ActivityProjection> activities = activityRepository.searchActivity(request.getTitle(), request.getUserId(), pageable);
+        Page<ActivityProjection> activities = activityRepository.searchActivity(request.getTitle(), request.getUserId(), request.getOrganizationId(), pageable);
 
         Page<SearchActivityResponse> listActivity = new PageImpl<>(activities.getContent().stream().map(activity -> basicMapper.convertToResponse(activity, SearchActivityResponse.class)).toList());
+
+        var activityIds = listActivity.stream().map(SearchActivityResponse::getId).toList();
+        var activityCategories = activityCategoryRepository.findAllByIdActivityIdIn(activityIds).stream().collect(Collectors.groupingBy(activityCategory -> activityCategory.getId().getActivityId(), Collectors.mapping(ac -> ac.getId().getCategoryKey(), Collectors.toList())));
+        listActivity.forEach(activity -> activity.setCategories(activityCategories.getOrDefault(activity.getId(), List.of())));
 
         return CustomPage.of(listActivity.getContent(), activities);
     }

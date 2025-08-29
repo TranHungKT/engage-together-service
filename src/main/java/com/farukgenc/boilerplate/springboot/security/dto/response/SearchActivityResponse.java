@@ -20,28 +20,11 @@ public class SearchActivityResponse {
 
     private Integer maxAttendees;
 
-    private List<ActivityCategoryResponse> categories;
+    private List<String> categories;
 
     private UUID organizationId;
 
     private OrganizationResponse organization;
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    static class ActivityCategoryResponse {
-        private ActivityCategoryIdResponse id;
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    static class ActivityCategoryIdResponse {
-        private UUID activityId;
-        private String categoryKey;
-    }
 
     @Data
     @AllArgsConstructor

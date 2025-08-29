@@ -16,8 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SearchActivityRequest extends CustomPagingRequest {
-    @NotNull
-    private String organizationId;
+    private UUID organizationId;
 
     private UUID userId;
     private String title;

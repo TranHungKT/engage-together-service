@@ -13,12 +13,13 @@ import java.util.UUID;
 public interface ActivityRepository extends JpaRepository<Activity, UUID> {
     List<Activity> findByOrganizationId(UUID organizationId);
 
-    @Query("select a.id as id, a.title as title, a.description as description, a.startDateTime as startDateTime, a.endDateTime as endDateTime, a.maxAttendees as maxAttendees, a.organization.id as organizationId, ac as categories, o as organization "
-            + "from Activity a JOIN ActivityCategory ac ON a.id = ac.id.activityId "
-            + "JOIN Organization o on a.organization.id = a.organization.id "
-            + "JOIN ActivityParticipant ap on a.id = ap.activityId "
-            + "where (a.title like %:title% or :title is null or :title ='') "
-            + "AND (ap.userId = :userId or :userId is null)"
+    @Query("SELECT DISTINCT a.id as id, a.title as title, a.description as description, a.startDateTime as startDateTime, a.endDateTime as endDateTime, a.maxAttendees as maxAttendees, a.organization.id as organizationId, o as organization "
+            + "FROM Activity a "
+            + "LEFT JOIN Organization o on a.organization.id = o.id "
+            + "LEFT JOIN ActivityParticipant ap on a.id = ap.activityId "
+            + "WHERE (a.title LIKE %:title% OR :title IS null OR :title ='') "
+            + "AND (ap.userId = :userId OR :userId IS null) "
+            + "AND (o.id = :organizationId OR :organizationId IS null)"
     )
-    Page<ActivityProjection> searchActivity(String title, UUID userId, Pageable pageable);
+    Page<ActivityProjection> searchActivity(String title, UUID userId, UUID organizationId, Pageable pageable);
 }
