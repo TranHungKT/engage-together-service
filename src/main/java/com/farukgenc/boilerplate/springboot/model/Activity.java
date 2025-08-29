@@ -1,8 +1,11 @@
 package com.farukgenc.boilerplate.springboot.model;
 
+import com.farukgenc.boilerplate.springboot.model.enums.ActivityStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -48,6 +51,9 @@ public class Activity extends BaseEntity {
     private String postalCode;
 
     private String country;
+
+    @Enumerated(EnumType.STRING)
+    private ActivityStatus status;
 
     @OneToMany(mappedBy = ActivityCategory_.ACTIVITY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ActivityCategory> categories = new ArrayList<>();

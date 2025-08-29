@@ -12,4 +12,6 @@ import java.util.UUID;
 public interface ActivityParticipantRepository extends JpaRepository<ActivityParticipant, ActivityParticipantId> {
     @Query("select ap from ActivityParticipant ap join User u on ap.userId = u.id where ap.activityId = :activityId")
     List<ParticipantProjection> findByActivityId(UUID activityId);
+
+    List<ActivityParticipant> findByUserId(UUID userId);
 }

@@ -14,6 +14,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.UUID;
 
@@ -25,11 +26,12 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Builder
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "USERS")
-public class User {
+public class User extends BaseEntity {
+    private static final String DEFAULT_USER_AVATAR = "https://picsum.photos/id/237/200/300";
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -47,4 +49,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
+    @Builder.Default
+    private String avatar = DEFAULT_USER_AVATAR;
 }
