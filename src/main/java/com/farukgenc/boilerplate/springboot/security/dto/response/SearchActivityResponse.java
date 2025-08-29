@@ -1,5 +1,6 @@
 package com.farukgenc.boilerplate.springboot.security.dto.response;
 
+import com.farukgenc.boilerplate.springboot.model.enums.ActivityStatus;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +20,8 @@ public class SearchActivityResponse {
     private LocalDateTime endDateTime;
 
     private Integer maxAttendees;
+
+    private ActivityStatus status;
 
     private List<String> categories;
 

@@ -1,5 +1,7 @@
 package com.farukgenc.boilerplate.springboot.repository.projections;
 
+import com.farukgenc.boilerplate.springboot.model.enums.ActivityStatus;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -19,4 +21,6 @@ public interface ActivityProjection {
     UUID getOrganizationId();
 
     OrganizationProjection getOrganization();
+
+    ActivityStatus getStatus();
 }
