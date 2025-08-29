@@ -1,5 +1,6 @@
 package com.farukgenc.boilerplate.springboot.model;
 
+import com.farukgenc.boilerplate.springboot.model.enums.ActivityParticipantStatus;
 import com.farukgenc.boilerplate.springboot.model.enums.UserRoleInActivity;
 import com.farukgenc.boilerplate.springboot.model.ids.ActivityParticipantId;
 import com.farukgenc.boilerplate.springboot.model.ids.ActivityParticipantId_;
@@ -47,4 +48,6 @@ public class ActivityParticipant extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private UserRoleInActivity userRole;
 
+    @Enumerated(EnumType.STRING)
+    private ActivityParticipantStatus status;
 }

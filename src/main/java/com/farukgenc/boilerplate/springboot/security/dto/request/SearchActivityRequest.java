@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @SuperBuilder
@@ -17,5 +19,6 @@ public class SearchActivityRequest extends CustomPagingRequest {
     @NotNull
     private String organizationId;
 
+    private UUID userId;
     private String title;
 }

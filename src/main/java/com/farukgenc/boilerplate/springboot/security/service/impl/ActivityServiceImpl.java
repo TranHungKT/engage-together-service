@@ -109,7 +109,7 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public CustomPage<SearchActivityResponse> searchActivity(SearchActivityRequest request) {
         Pageable pageable = request.toPageable(DEFAULT_SORT_FIELD);
-        Page<ActivityProjection> activities = activityRepository.searchActivity(request.getTitle(), pageable);
+        Page<ActivityProjection> activities = activityRepository.searchActivity(request.getTitle(), request.getUserId(), pageable);
 
         Page<SearchActivityResponse> listActivity = new PageImpl<>(activities.getContent().stream().map(activity -> basicMapper.convertToResponse(activity, SearchActivityResponse.class)).toList());
 

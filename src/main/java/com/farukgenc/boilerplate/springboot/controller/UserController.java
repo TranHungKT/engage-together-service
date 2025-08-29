@@ -7,6 +7,7 @@ import com.farukgenc.boilerplate.springboot.security.dto.response.LoginResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.response.RegistrationResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.response.SearchUserResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.response.UserDetailsResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.response.UserProfileResponse;
 import com.farukgenc.boilerplate.springboot.security.jwt.JwtTokenService;
 import com.farukgenc.boilerplate.springboot.security.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,12 +16,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,10 +33,16 @@ public class UserController {
     private final JwtTokenService jwtTokenService;
 
     @GetMapping()
-    @Operation(tags = "User Service", description = "You can get the user information base on token")
+    @Operation(tags = "User Service", description = "You can get the basic user information base on token")
     public ResponseEntity<UserDetailsResponse> getUserDetails() {
         final UserDetailsResponse userDetailsResponse = userService.getUserDetails();
         return ResponseEntity.status(HttpStatus.OK).body(userDetailsResponse);
+    }
+
+    @GetMapping("/profile/{userId}")
+    @Operation(tags = "User Profile", description = "Get all information related to user")
+    public ResponseEntity<UserProfileResponse> getUserProfile(@PathVariable UUID userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserProfile(userId));
     }
 
     @PostMapping("/register")

@@ -7,8 +7,10 @@ import com.farukgenc.boilerplate.springboot.security.dto.request.SearchUserReque
 import com.farukgenc.boilerplate.springboot.security.dto.response.RegistrationResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.response.SearchUserResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.response.UserDetailsResponse;
+import com.farukgenc.boilerplate.springboot.security.dto.response.UserProfileResponse;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created on Ağustos, 2020
@@ -26,5 +28,7 @@ public interface UserService {
     UserDetailsResponse getUserDetails();
 
     List<SearchUserResponse> searchUser(SearchUserRequest request);
+
+    UserProfileResponse getUserProfile(UUID userId);
 
 }
