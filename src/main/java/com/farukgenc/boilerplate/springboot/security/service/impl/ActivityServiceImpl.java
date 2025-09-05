@@ -15,6 +15,7 @@ import com.farukgenc.boilerplate.springboot.repository.UserRepository;
 import com.farukgenc.boilerplate.springboot.repository.projections.ActivityProjection;
 import com.farukgenc.boilerplate.springboot.security.dto.request.CreateActivityRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.request.JoinActivityRequest;
+import com.farukgenc.boilerplate.springboot.security.dto.request.ManageParticipantsRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.request.SearchActivityRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.response.GetActivityDetailsResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.response.JoinActivityResponse;
@@ -181,5 +182,25 @@ public class ActivityServiceImpl implements ActivityService {
                 .build();
         activityParticipantRepository.save(newActivityParticipant);
         return new JoinActivityResponse("Join activity success");
+    }
+
+    @Override
+    public void manageParticipants(ManageParticipantsRequest request) {
+        var activityOptional = activityRepository.findById(request.getActivityId());
+        activityValidationService.validateActivity(activityOptional);
+
+        assert activityOptional.isPresent();
+
+        var userMap = request.getUpdatedParticipants().stream().collect(Collectors.toMap(ManageParticipantsRequest.Participant::getUserId, ManageParticipantsRequest.Participant::getStatus));
+
+        var currentParticipantList = activityParticipantRepository.findAllByUserIdInAndActivityId(userMap.keySet(), request.getActivityId())
+                .stream()
+                .map(user -> {
+                    user.setStatus(userMap.getOrDefault(user.getUserId(), user.getStatus()));
+                    return user;
+                })
+                .toList();
+
+        activityParticipantRepository.saveAll(currentParticipantList);
     }
 }

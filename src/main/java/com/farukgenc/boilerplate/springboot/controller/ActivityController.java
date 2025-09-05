@@ -3,6 +3,7 @@ package com.farukgenc.boilerplate.springboot.controller;
 import com.farukgenc.boilerplate.springboot.common.model.dto.CustomPage;
 import com.farukgenc.boilerplate.springboot.security.dto.request.CreateActivityRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.request.JoinActivityRequest;
+import com.farukgenc.boilerplate.springboot.security.dto.request.ManageParticipantsRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.request.SearchActivityRequest;
 import com.farukgenc.boilerplate.springboot.security.dto.response.GetActivityDetailsResponse;
 import com.farukgenc.boilerplate.springboot.security.dto.response.JoinActivityResponse;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,5 +59,12 @@ public class ActivityController {
             @Valid @RequestBody JoinActivityRequest request
     ) {
         return ResponseEntity.status(HttpStatus.OK).body(activityService.joinActivity(request));
+    }
+
+    @PatchMapping("/manage-participants")
+    @Operation(tags = "Manage participants")
+    public ResponseEntity<Void> manageParticipants(@Valid @RequestBody ManageParticipantsRequest request){
+        activityService.manageParticipants(request);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
