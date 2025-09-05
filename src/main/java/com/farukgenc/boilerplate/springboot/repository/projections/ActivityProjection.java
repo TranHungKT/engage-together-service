@@ -23,4 +23,14 @@ public interface ActivityProjection {
     OrganizationProjection getOrganization();
 
     ActivityStatus getStatus();
+
+    String getAddress();
+
+    String getStateProvince();
+
+    String getCity();
+
+    String getPostalCode();
+
+    String getCountry();
 }
