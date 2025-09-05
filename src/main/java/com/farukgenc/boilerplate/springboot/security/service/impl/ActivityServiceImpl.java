@@ -133,6 +133,7 @@ public class ActivityServiceImpl implements ActivityService {
                         .name(activityParticipant.getUser().getName())
                         .email(activityParticipant.getUser().getName())
                         .userRoleInActivity(activityParticipant.getUserRole())
+                        .status(activityParticipant.getStatus())
                         .build()
         ).toList();
 

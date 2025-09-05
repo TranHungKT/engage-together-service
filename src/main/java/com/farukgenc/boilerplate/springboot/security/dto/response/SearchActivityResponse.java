@@ -27,6 +27,16 @@ public class SearchActivityResponse {
 
     private UUID organizationId;
 
+    private String address;
+
+    private String stateProvince;
+
+    private String city;
+
+    private String postalCode;
+
+    private String country;
+
     private OrganizationResponse organization;
 
     @Data

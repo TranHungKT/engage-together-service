@@ -1,5 +1,6 @@
 package com.farukgenc.boilerplate.springboot.security.dto.response;
 
+import com.farukgenc.boilerplate.springboot.model.enums.ActivityParticipantStatus;
 import com.farukgenc.boilerplate.springboot.model.enums.UserRoleInActivity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -40,6 +41,7 @@ public class GetActivityDetailsResponse {
         private String username;
         private String email;
         private UserRoleInActivity userRoleInActivity;
+        private ActivityParticipantStatus status;
     }
 
     private String address;

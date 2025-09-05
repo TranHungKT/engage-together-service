@@ -15,7 +15,8 @@ import java.util.UUID;
 public interface ActivityRepository extends JpaRepository<Activity, UUID> {
     List<Activity> findByOrganizationId(UUID organizationId);
 
-    @Query("SELECT DISTINCT a.id as id, a.title as title, a.description as description, a.startDateTime as startDateTime, a.endDateTime as endDateTime, a.maxAttendees as maxAttendees, a.status as status ,a.organization.id as organizationId, o as organization "
+    @Query("SELECT DISTINCT a.id as id, a.title as title, a.description as description, a.startDateTime as startDateTime, a.endDateTime as endDateTime, a.maxAttendees as maxAttendees, a.status as status ,a.organization.id as organizationId, o as organization, "
+            + "a.address as address, a.stateProvince as stateProvince, a.city as city, a.postalCode as postalCode, a.country as country "
             + "FROM Activity a "
             + "LEFT JOIN Organization o on a.organization.id = o.id "
             + "LEFT JOIN ActivityParticipant ap on a.id = ap.activityId "
