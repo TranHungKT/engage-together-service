@@ -4,5 +4,7 @@ public enum ActivityParticipantStatus {
     REGISTERED,
     JOINED,
     COMPLETED,
-    DID_NOT_JOIN
+    DID_NOT_JOIN,
+    DELETED,
+    REQUESTED_TO_JOIN
 }
