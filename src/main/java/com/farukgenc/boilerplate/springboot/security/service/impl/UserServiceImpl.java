@@ -6,6 +6,7 @@ import com.farukgenc.boilerplate.springboot.model.User;
 import com.farukgenc.boilerplate.springboot.model.enums.ActivityParticipantStatus;
 import com.farukgenc.boilerplate.springboot.model.enums.UserRole;
 import com.farukgenc.boilerplate.springboot.repository.ActivityParticipantRepository;
+import com.farukgenc.boilerplate.springboot.repository.OrganizationRepository;
 import com.farukgenc.boilerplate.springboot.repository.UserRepository;
 import com.farukgenc.boilerplate.springboot.security.dto.AuthenticatedUserDto;
 import com.farukgenc.boilerplate.springboot.security.dto.request.RegistrationRequest;
@@ -43,6 +44,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ActivityParticipantRepository activityParticipantRepository;
+    private final OrganizationRepository organizationRepository;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -92,11 +94,17 @@ public class UserServiceImpl implements UserService {
         }
 
         var user = userOptional.get();
+        var organizations = organizationRepository.findByUserId(user.getId());
 
         return UserDetailsResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())
                 .username(user.getUsername())
+                .organizations(organizations.stream().map(organization -> UserDetailsResponse.OrganizationResponse.builder()
+                                .organizationId(organization.getId())
+                                .organizationName(organization.getName())
+                                .build())
+                        .toList())
                 .build();
     }
 

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -18,4 +19,15 @@ public class UserDetailsResponse {
     private String username;
 
     private String email;
+
+    private List<OrganizationResponse> organizations;
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @Builder
+    public static class OrganizationResponse {
+        private UUID organizationId;
+        private String organizationName;
+    }
 }
